@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>BucketList</title>
+  <title>Now Berlinale</title>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
@@ -9,20 +9,8 @@
 
 </head>
 <body>
-  <header class="devise-header">
-    <% if notice %>
-      <p class="notice"><%= notice %></p>
-    <% end %>
-    <% if alert %>
-      <p class="alert"><%= alert %></p>
-    <% end %>
 
-  </header>
-    
   <%= yield %>
 
-  <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDscm-9v7RZADfikby80CnaJpJCP-xQxNs&callback=initMap">
-    </script>
 </body>
 </html>

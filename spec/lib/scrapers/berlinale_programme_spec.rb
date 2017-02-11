@@ -8,7 +8,7 @@ RSpec.describe Scrapers::BerlinaleProgramme do
   describe '#data' do
     it 'returns some data' do
       VCR.use_cassette("berlinale_page_#{page}") do
-        data = expect(subject.data).to be_a String
+        expect(subject.data).to be_a String
         expect(subject.send(:success?)).to be true
       end
     end

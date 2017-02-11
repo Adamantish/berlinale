@@ -24,7 +24,7 @@ RSpec.describe Parsers::BerlinalePage do
     let(:films) { subject.films }
     it 'returns array of hashes with relevant information' do
       expect(films.first).to eq(title: 'Jokinen',
-                                detail_path: 'http://www.berlinale.de/en/programm/berlinale_programm/datenblatt.php?film_id=201712035')
+                                page_url: 'http://www.berlinale.de/en/programm/berlinale_programm/datenblatt.php?film_id=201712035')
     end
 
     context 'when no films on page' do

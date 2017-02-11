@@ -48,7 +48,7 @@ module Parsers
     def title_and_link(film_row_node)
       link = film_row_node.css('td.title a')[0]
       { title: link.children.first.inner_html,
-        detail_path: "#{Scrapers::BerlinaleProgramme::ORIGIN}#{link.attributes['href'].value}" }
+        page_url: "#{Scrapers::BerlinaleProgramme::ORIGIN}#{link.attributes['href'].value}" }
     end
   end
 end
