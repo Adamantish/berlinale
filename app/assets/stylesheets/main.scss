@@ -6,7 +6,7 @@ body {
   top: 2.5em;
   opacity: 0;
   -webkit-transition: opacity 5s;
-  transition: opacity 3s;
+  transition: opacity 5s;
 }
 
 
@@ -41,8 +41,8 @@ body {
   height: 800px;
   top: 0;
   position: fixed;
-  -webkit-filter: blur(30px) brightness(0.8) ;
-  filter: blur(30px) brightness(0.80) ;
+  -webkit-filter: blur(30px) brightness(0.87) ;
+  filter: blur(30px) brightness(0.50) ;
 
   transition: -webkit-filter 0.6s;
   

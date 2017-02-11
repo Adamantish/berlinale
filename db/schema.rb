@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160209114909) do
+ActiveRecord::Schema.define(version: 20160119202633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,9 +39,6 @@ ActiveRecord::Schema.define(version: 20160209114909) do
     t.decimal  "lng"
     t.integer  "traveller_id"
   end
-
-  add_index "to_dos", ["traveller_id"], name: "index_to_dos_on_traveller_id", using: :btree
-  add_index "to_dos", ["updated_at"], name: "index_to_dos_on_updated_at", using: :btree
 
   create_table "travellers", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

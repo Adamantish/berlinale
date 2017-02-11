@@ -2,9 +2,6 @@ class ToDosController < ApplicationController
 
   include ApplicationHelper
 
-
-  before_filter :put_current_traveller_in_params, only: [:create]
-
   def unsynced_changes
     # If this were a heavily concurrent app I'd test for all types of change and concatenate rendered JS 
     # for all affected types. In this low traffic setting it's overkill.
@@ -34,7 +31,7 @@ class ToDosController < ApplicationController
   end
 
   def create
-    @new_to_do = ToDo.create!(sane_params)
+    @new_to_do = ToDo.create(sane_params)
     @new_to_do_json = [@new_to_do].to_json(except: %i(created_at, updated_at))
     @to_dos = []; @to_dos << @new_to_do
   end
@@ -73,7 +70,7 @@ class ToDosController < ApplicationController
 
   def search
     
-    base_query = ToDo.includes(:destination).joins(:destination).where("traveller_id = ?", current_traveller.id)
+    base_query = ToDo.includes(:destination).joins(:destination)
     @search_results = base_query.where("description || address || name ILIKE ?", "%#{params[:search]}%")
 
     @results_a = []
@@ -104,11 +101,8 @@ class ToDosController < ApplicationController
   private
 
   def sane_params
-     params.require(:to_do).permit(:traveller_id, :destination_id, :description, :address)
+     params.require(:to_do).permit(:destination_id, :description, :address)
   end
 
-  def put_current_traveller_in_params
-    params["to_do"]["traveller_id"] = current_traveller.id
-  end
 
 end
