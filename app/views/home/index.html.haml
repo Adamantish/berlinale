@@ -1,3 +1,11 @@
-#blur-container
-  %h1 Now Berlinale
-  %h3 The Films That Are Definitely Still Available
+%h1 Now Berlinale
+%h3 The Films That Are Definitely Still Available
+
+%table
+  %tbody
+    - @screenings.each do |screening|
+      %tr
+        %td.title
+          = screening.title
+        %td.page_url
+          = link_to 'more...', screening.page_url
