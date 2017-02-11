@@ -1,11 +1,27 @@
-%h1 Now Berlinale
-%h3 The Films That Are Definitely Still Available
+.content
+  %h1 Now Berlinale
+  .updated-time
+    = "Last updated #{((Time.current - Screening.maximum(:updated_at)) / 60).to_i} minutes ago"
+  %h3
+    = "The #{@screenings.count} Films you can still get tickets for online"
+  %p
+    There are many others you can probably still buy offline direct from the cinema.  Find out about them on
+    = link_to 'the official site search', 'http://www.berlinale.de/en/programm/berlinale_programm/programmsuche.php'
 
-%table
-  %tbody
-    - @screenings.each do |screening|
-      %tr
-        %td.title
-          = screening.title
-        %td.page_url
-          = link_to 'more...', screening.page_url
+  %p
+    But if you want to figure out what's definitely available that's why
+    I knocked up this site today. :)
+
+  %h4 Films
+  %table
+    %tbody
+      - @screenings.each do |screening|
+        %tr
+          %td.title
+            = screening.title
+          %td.page_url
+            = link_to 'details...', screening.page_url
+
+.footer
+  .about
+    = link_to 'Me on twitter', 'https://twitter.com/MissRahee'

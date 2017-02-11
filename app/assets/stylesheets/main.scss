@@ -1,9 +1,24 @@
 body {
-  position: relative;
-  background-color: whitesmoke;
+  background-color: #d82b47;
   font-size: 1.2rem;
   font-family: helvetica;
-  top: 2.5em;
+}
+
+p {
+  font-size: 0.75em;
+}
+
+.content {
+  left: 0.1em;
+  top: 1em;
+  background-color: whitesmoke;
+  position: relative;
+  padding: 0.2em 1em;
+}
+
+.updated-time {
+  font-style: italic;
+  font-size: 0.7em;
 }
 
 #greetings > * {
