@@ -20,10 +20,23 @@ RSpec.describe Parsers::BerlinalePage do
     end
   end
 
-
   describe '#films' do
+    let(:films) { subject.films }
     it 'returns array of hashes with relevant information' do
-      subject.films
+      expect(films.first).to eq(title: 'Jokinen',
+                                detail_path: 'http://www.berlinale.de/en/programm/berlinale_programm/datenblatt.php?film_id=201712035')
+    end
+
+    context 'when no films on page' do
+      let(:page_body) do
+        VCR.use_cassette('berlinale_page_100') do
+          Scrapers::BerlinaleProgramme.new(100).data
+        end
+      end
+
+      it 'returns nil' do
+        expect(subject.films).to be_nil
+      end
     end
   end
 end
