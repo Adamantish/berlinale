@@ -6,7 +6,7 @@ default: &default
 
 development:
   <<: *default
-  database: bucket_list_dev
+  database: berlinale_dev
   host: localhost
   port: 5432
   username: Adam
@@ -16,12 +16,12 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: bucket_list_test
+  database: berlinale_test
   host: localhost
   port: 5432
   username: Adam
 
 production:
   <<: *default
-  database: bucket_list_prod
+  database: berlinale_prod
   username: Adam

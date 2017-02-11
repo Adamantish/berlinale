@@ -12,6 +12,7 @@ gem 'haml-rails'
 gem 'underscore-rails'
 gem 'httparty'
 gem 'devise'
+gem 'faraday'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -19,6 +20,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'cucumber-rails', :require => false
   gem 'pry-byebug'
+  gem 'webmock'
 end
 
 group :development do
@@ -33,6 +35,7 @@ group :test do
   gem 'launchy'
   gem 'poltergeist'
   gem 'capybara'
+  gem 'vcr'
   # gem 'selenium'
 end
 
