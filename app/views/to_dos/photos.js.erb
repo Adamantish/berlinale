@@ -1,0 +1,3 @@
+var photosHTML = "<%= escape_javascript(render partial: 'photos', locals: {photos: @photos}) %>"
+
+$("div[data_id=<%= @to_do_id %>]").append(photosHTML)

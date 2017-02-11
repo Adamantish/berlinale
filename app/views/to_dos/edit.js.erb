@@ -1,0 +1,10 @@
+
+var toToID = <%= @edit_or_new_to_do.id %>
+var storedToDo = new ToDo(toToID, "div[data_id=" + toToID + "]")
+
+var formHTML = "<%= j(render partial: 'edit', locals: {edit_to_do: @edit_or_new_to_do}) %>"
+
+formHTML = $( formHTML );
+storedToDo.transitionContent( formHTML, storedToDo.editHeight );
+
+

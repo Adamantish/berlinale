@@ -1,0 +1,18 @@
+.to_do.shadow-box{data: "#{t.description}" , data_id: "#{t.id}"}
+  .container__to_do_actions
+    .icon__trash.sprite--tiny__trash{ onclick: "deleteToDoConfirm(#{t.id})"}
+    = link_to image_tag('edit-icon.png') , edit_to_do_path(t), { id: "for-test-edit-link" , class: "edit-link", remote: true }
+
+  .h3.to_do__title
+    = t.description
+  %p
+    Location: #{t.address}
+
+  .container--like
+    = link_to "<div class='icon sprite--tiny__like'></div>".html_safe, create_like_to_do_path(t), { method: "POST", remote: true }
+    .num_of_likes
+      = t.likes.length == 0 ? "" : t.likes.length
+
+  = link_to "show Flickr snaps", photos_to_do_path(t) , { class: "click--photos", remote: true }
+
+  

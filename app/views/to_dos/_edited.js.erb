@@ -1,0 +1,13 @@
+
+runSyncPolling( false );
+
+var toDoHTML = "<%= j(render partial: 'to_dos/to_do', locals: { t: @edited_to_do }) %>"
+
+var id = <%= @edited_to_do.id %>
+
+toDos[id].insertUpdatedToDo( $(toDoHTML).children() );
+
+window.toDoLatestTimestamps.latest_update = <%= @edited_to_do.updated_at.to_i %>
+
+runSyncPolling( true );
+

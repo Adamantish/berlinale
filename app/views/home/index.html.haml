@@ -1,0 +1,45 @@
+#blur-container
+  %nav
+    .heading The Bucket List
+    .search
+      = form_tag search_to_dos_path, method: "GET" , remote: true do
+        %fieldset#fieldset__search
+          = text_field_tag :search , "" , placeholder: "Search pebbles"
+          %input#btn--search{type: "submit"}
+        .shadow-box#container--search-results{class: @search_results ? "" : "undisplayed"}
+          %fieldset
+            #search-results
+              - if @search_results
+                = render partial: 'search'
+    #nav-buttons
+      = select_tag "Find Destination" , options_from_collection_for_select(@destinations, "id", "name") , { id: "destination__search-opts", prompt: "Search destination"}
+
+      = select_tag "Sort ToDos" , "<option value='data' >^A-Z</option><option value='data_id'>^1,2,3</option>", {id: "select--sort-to_dos", prompt: "Sort by"}
+      - if current_traveller
+        = link_to "Log Out", destroy_traveller_session_path, {method: "DELETE"}
+      - else
+        = link_to "Register", new_traveller_registration_path
+        = link_to "Log In", new_traveller_session_path
+
+  #bucket
+    
+    #add__to_do.shadow-box
+      = render partial: 'to_dos/edit', locals: { edit_to_do: @edit_or_new_to_do, destination_options: @destination_options}
+      %span#btn__new_to_do--label.undisplayed
+        
+      %button#btn__new_to_do.undisplayed{onclick: "toggleNewToDo()"}
+        Add a Pebble +
+        
+    #to_dos
+      = render partial: 'to_dos/to_dos'
+
+  #map-container
+    #map-canvas{data: {to_dos: @to_dos_json }}
+    #map-overlay
+
+.center-align
+  #greetings
+    %h1
+      B U C K E T  L I S T 
+    %p
+      Commodifying your deepest desires
