@@ -14,12 +14,14 @@ module Parsers
 
     private
 
+    attr_reader :body
+
     def document
       Nokogiri::HTML(body)
     end
 
     def all_film_rows
-      @_all_film_rows ||= document.css('table.programmeTable > tbody > tr')
+      @_all_film_rows ||= document.css('table.programmeTable > tbody > tr').to_a
     end
 
     def key_row_indices
@@ -31,16 +33,21 @@ module Parsers
     end
 
     def title_row_nodes
-      link_row_indices = key_row_indices.map { |i| i + 1 } # move to next row
-      all_film_rows.to_a.values_at(*link_row_indices)
+      link_row_indices = key_row_indices.map do |i|
+        if !all_film_rows[i].css('td.title a').empty?
+          i
+        elsif !all_film_rows[i + 1].css('td.title a').empty?
+          i + 1
+        end
+      end
+
+      all_film_rows.values_at(*link_row_indices)
     end
 
     def title_and_link(film_row_node)
-      link = film_row_node.css('a')[0]
+      link = film_row_node.css('td.title a')[0]
       { title: link.children.first.inner_html,
-        detail_path: link.attributes['href'].value }
+        detail_path: "#{Scrapers::BerlinaleProgramme::ORIGIN}link.attributes['href'].value" }
     end
-
-    attr_reader :body
   end
 end

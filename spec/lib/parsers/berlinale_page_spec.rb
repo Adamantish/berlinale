@@ -20,12 +20,10 @@ RSpec.describe Parsers::BerlinalePage do
     end
   end
 
-  describe '#title_link' do
-
-  end
 
   describe '#films' do
     it 'returns array of hashes with relevant information' do
+      subject.films
     end
   end
 end

@@ -2,6 +2,8 @@ require_relative 'generic'
 
 module Scrapers
   class BerlinaleProgramme < Generic
+    ORIGIN = 'http://www.berlinale.de'.freeze
+
     def initialize(page)
       super(page)
     end
@@ -15,7 +17,7 @@ module Scrapers
     end
 
     def origin
-      'http://www.berlinale.de'
+      ORIGIN
     end
 
     def path
