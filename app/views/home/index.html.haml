@@ -1,18 +1,19 @@
 .content
   %h1 Now Berlinale
   .updated-time
-    = "Last updated #{((Time.current - Screening.maximum(:updated_at)) / 60).to_i} minutes ago"
+    - minutes = ((Time.current - Screening.maximum(:updated_at)) / 60).to_i
+    - time_words = minutes > 0 ? "#{minutes} minutes ago" : "just now"
+    = "Last updated #{time_words}."
   %h3
     = "The #{@screenings.count} Films you can still get tickets for online"
   %p
-    There are many others you can probably still buy offline direct from the cinema.  Find out about them on
+    If you fancy trying your luck with the cinemas that don't sell online use
     = link_to 'the official site search', 'http://www.berlinale.de/en/programm/berlinale_programm/programmsuche.php'
 
   %p
-    But if you want to figure out what's definitely available that's why
-    I knocked up this site today. :)
+    But if you want to figure out what's definitely available that's why I knocked up this site today. :)
 
-  %h4 Films
+  %h4 The Films
   %table
     %tbody
       - @screenings.each do |screening|
@@ -22,6 +23,6 @@
           %td.page_url
             = link_to 'details...', screening.page_url
 
-.footer
+%footer
   .about
     = link_to 'Me on twitter', 'https://twitter.com/MissRahee'
