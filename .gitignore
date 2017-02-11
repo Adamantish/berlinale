@@ -16,5 +16,3 @@
 !/log/.keep
 /tmp
 
-# Ignore source of countries sample webpage 
-/public/countries.html
