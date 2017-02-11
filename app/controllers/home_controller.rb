@@ -6,7 +6,7 @@ class HomeController < ApplicationController
 
     begin
       count = Screening.uniq.count(:page_url)
-      Request.create(kind: :visitor, movie_count: count)
+      Request.create(remote_ip: request.remote_ip, kind: :visitor, movie_count: count)
     rescue ActiveRecord::StatementInvalid
     end
   end
