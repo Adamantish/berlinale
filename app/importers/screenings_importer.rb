@@ -7,7 +7,6 @@ class ScreeningsImporter
       Screening.delete_all
       loop do
         page += 1
-        require 'pry'; binding.pry
         body = Scrapers::BerlinaleProgramme.new(page).data
         films = Parsers::BerlinalePage.new(body).films
         break unless films
