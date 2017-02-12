@@ -1,6 +1,7 @@
 require 'spec_helper'
 require_relative '../../../lib/scrapers/berlinale_programme'
 require_relative '../../../lib/parsers/berlinale_page'
+require_relative '../../../lib/normalisers/absolute_links'
 
 RSpec.describe Parsers::BerlinalePage do
   subject { described_class.new(page_body) }
@@ -23,8 +24,8 @@ RSpec.describe Parsers::BerlinalePage do
   describe '#films' do
     let(:films) { subject.films }
     it 'returns array of hashes with relevant information' do
-      expect(films.first).to eq(title: 'Jokinen',
-                                page_url: 'http://www.berlinale.de/en/programm/berlinale_programm/datenblatt.php?film_id=201712035')
+      expect(films.first).to include(title: 'Jokinen',
+                                     page_url: 'http://www.berlinale.de/en/programm/berlinale_programm/datenblatt.php?film_id=201712035')
     end
 
     context 'when no films on page' do

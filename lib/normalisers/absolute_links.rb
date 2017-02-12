@@ -8,16 +8,18 @@ module Normalisers
     end
 
     def process
-      node = @node.dup
-      node.css('a').each do |anchor|
-        anchor.attributes['href'].value = "#{@origin}#{anchor.attributes['href'].value}"
-      end
+      # TODO: Turn this off for now until it's fixed
+      @node
+      # node = @node.dup
+      # node.css('a').each do |anchor|
+      #   absolutify(anchor, 'a')
+      # end
 
-      node.css('img').each do |img|
-        img.attributes['src'].value = "#{@origin}#{img.attributes['src'].value}"
-      end
+      # node.css('img').each do |img|
+      #   absolutify(img, 'img')
+      # end
 
-      node
+      # node
     end
 
     private
@@ -31,9 +33,9 @@ module Normalisers
   end
 end
 
-      origin = Scrapers::BerlinaleProgramme::ORIGIN
-      Screening.all.each do |screen|
-        node = Nokogiri::HTML(screen.html_row)
-        new_node = Normalisers::AbsoluteLinks.new(node, origin).process
-        screen.update!(html_row: new_node.to_html)
-      end
+      # origin = Scrapers::BerlinaleProgramme::ORIGIN
+      # Screening.all.each do |screen|
+      #   node = Nokogiri::HTML(screen.html_row)
+      #   new_node = Normalisers::AbsoluteLinks.new(node, origin).process
+      #   screen.update!(html_row: new_node.to_html)
+      # end

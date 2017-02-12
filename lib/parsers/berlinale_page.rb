@@ -6,7 +6,9 @@ module Parsers
       ticket_icon:        'a.sprite.tickets_N',
       future_ticket_icon: 'a.sprite.tickets_I',
       film_row:           'table.programmeTable > tbody > tr',
-      film_link:          'td.title a'
+      film_row_detail_link: 'td.title a',
+      date: '.date',
+      time_berlin: '.time'
     }.freeze
 
     def initialize(body)
@@ -28,18 +30,18 @@ module Parsers
       Nokogiri::HTML(body)
     end
 
-    def locate(within_node, locator)
+    def find_all(within_node, locator)
       within_node.css(CSS_LOCATORS[locator])
     end
 
     def all_film_rows
-      @_all_film_rows ||= locate(document, :film_row).to_a
+      @_all_film_rows ||= find_all(document, :film_row).to_a
     end
 
     def ticket_row_indices
       @_ticket_row_indices ||= [].tap do |indices|
         all_film_rows.each_with_index do |film, i|
-          indices << i unless locate(film, :ticket_icon).empty?
+          indices << i unless find_all(film, :ticket_icon).empty?
         end
       end
     end
@@ -49,9 +51,9 @@ module Parsers
       # But not when a number of short films are part of a single screening.
       # This partially takes account of that, taking only the first listed short.
       link_row_indices = ticket_row_indices.map do |i|
-        if !locate(all_film_rows[i], :film_row_link).empty?
+        if !find_all(all_film_rows[i], :film_row_detail_link).empty?
           i
-        elsif !locate(all_film_rows[i + 1], :film_row_link).empty?
+        elsif !find_all(all_film_rows[i + 1], :film_row_detail_link).empty?
           i + 1
         end
       end
@@ -61,8 +63,8 @@ module Parsers
 
     def film_hash(film_row_node)
       origin = Scrapers::BerlinaleProgramme::ORIGIN
-      film_row_node = Normalisers::AbsoluteLinks.new(film_row_node, origin).process
-      link = locate(film_row_node, :film_row_link)[0]
+      film_row_node = ::Normalisers::AbsoluteLinks.new(film_row_node, origin).process
+      link = find_all(film_row_node, :film_row_detail_link)[0]
       { title: link.children.first.inner_html,
         page_url: "#{Scrapers::BerlinaleProgramme::ORIGIN}#{link.attributes['href'].value}",
         html_row: film_row_node.to_html }

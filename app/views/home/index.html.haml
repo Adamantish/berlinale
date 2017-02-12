@@ -13,13 +13,18 @@
   %p
     But if you want to get your plans sorted now use this. :)
 
-  %h4 The Films
-  %table
-    %tbody
-      - @screenings.each do |screening|
-        %tr
-          %td.page_url
-            = link_to screening.title, screening.page_url
+  - @date_groups.each_pair do |date_heading, screenings|
+    %h3
+      = date_heading
+    %table
+      %tbody
+        - screenings.each do |screening|
+          %tr
+            %td.page_url
+              = link_to screening.title, screening.page_url
+            %td.starts_at
+              = screening.berlin_time_text
+
 
 %footer
   .about
