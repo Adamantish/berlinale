@@ -17,7 +17,9 @@
   %table
     %tbody
       - @screenings.each do |screening|
-        = screening.html_row.html_safe
+        %tr
+          %td.page_url
+            = link_to screening.title, screening.page_url
 
 %footer
   .about
