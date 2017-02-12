@@ -1,9 +1,9 @@
+%h1 Berlinale 2017
+.updated-time
+  - minutes = ((Time.current - Screening.maximum(:updated_at)) / 60).to_i
+  - time_words = minutes > 0 ? "#{minutes} minutes ago" : "just now"
+  = "Last updated #{time_words}."
 .content
-  %h1 Now Berlinale
-  .updated-time
-    - minutes = ((Time.current - Screening.maximum(:updated_at)) / 60).to_i
-    - time_words = minutes > 0 ? "#{minutes} minutes ago" : "just now"
-    = "Last updated #{time_words}."
   %h3
     = "The #{@screenings.count} Films you can still get tickets for online"
   %p

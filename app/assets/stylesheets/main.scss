@@ -2,6 +2,7 @@ body {
   background-color: #d82b47;
   font-size: 1.2rem;
   font-family: helvetica;
+  color: whitesmoke;
 }
 
 p {
@@ -13,6 +14,7 @@ footer {
 }
 
 .content {
+  color: black;
   left: 0.1em;
   top: 1em;
   background-color: whitesmoke;
@@ -23,6 +25,8 @@ footer {
 .updated-time {
   font-style: italic;
   font-size: 0.7em;
+  top: -1.8em;
+  position: relative;
 }
 
 #greetings > * {
