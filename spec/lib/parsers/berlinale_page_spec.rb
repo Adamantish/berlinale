@@ -10,10 +10,10 @@ RSpec.describe Parsers::BerlinalePage do
     end
   end
 
-  describe '#key_row_indices' do
+  describe '#ticket_row_indices' do
     it 'returns html_nodes with available tickets' do
       rows = subject.send(:all_film_rows)
-      subject.send(:key_row_indices).each do |i|
+      subject.send(:ticket_row_indices).each do |i|
         buy_link = rows[i].css('a.sprite.tickets_N').first.attributes['href'].value
         expect(buy_link).to include('eventim.de')
       end
