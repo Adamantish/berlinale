@@ -9,7 +9,7 @@ module Parsers
     def films
       return nil if all_film_rows.empty?
       title_row_nodes.map do |row_node|
-        title_and_link(row_node)
+        film_hash(row_node)
       end
     end
 
@@ -35,7 +35,7 @@ module Parsers
 
     def title_row_nodes
       link_row_indices = key_row_indices.map do |i|
-        if !all_film_rows[i].css('td.title a').empty?
+        if    !all_film_rows[i    ].css('td.title a').empty?
           i
         elsif !all_film_rows[i + 1].css('td.title a').empty?
           i + 1
@@ -45,10 +45,13 @@ module Parsers
       all_film_rows.values_at(*link_row_indices)
     end
 
-    def title_and_link(film_row_node)
+    def film_hash(film_row_node)
+      origin = Scrapers::BerlinaleProgramme::ORIGIN
+      film_row_node = Normalisers::AbsoluteLinks.new(film_row_node, origin).process
       link = film_row_node.css('td.title a')[0]
       { title: link.children.first.inner_html,
-        page_url: "#{Scrapers::BerlinaleProgramme::ORIGIN}#{link.attributes['href'].value}" }
+        page_url: "#{Scrapers::BerlinaleProgramme::ORIGIN}#{link.attributes['href'].value}",
+        html_row: film_row_node.to_html }
     end
   end
 end

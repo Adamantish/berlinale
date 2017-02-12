@@ -11,17 +11,13 @@
     = link_to 'the official site search', 'http://www.berlinale.de/en/programm/berlinale_programm/programmsuche.php'
 
   %p
-    But if you want to figure out what's definitely available that's why I knocked up this site today. :)
+    But if you want to figure out what's definitely available you're in the right place. :)
 
   %h4 The Films
   %table
     %tbody
       - @screenings.each do |screening|
-        %tr
-          %td.title
-            = screening.title
-          %td.page_url
-            = link_to 'details...', screening.page_url
+        = screening.html_row.html_safe
 
 %footer
   .about

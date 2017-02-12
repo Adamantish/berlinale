@@ -37,11 +37,11 @@ module Scrapers
     end
 
     def timeout
-      5 # seconds
+      7 # seconds
     end
 
     def open_timeout
-      2 # seconds
+      5 # seconds
     end
 
     def max_retries
