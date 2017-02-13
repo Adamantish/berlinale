@@ -21,6 +21,13 @@ RSpec.describe Parsers::BerlinalePage do
     end
   end
 
+  describe '#screening_icons' do
+    let(:screenings) { subject.screenings }
+    it 'returns array of hashes with relevant information' do
+      screenings
+    end
+  end
+
   describe '#films' do
     let(:films) { subject.films }
     it 'returns array of hashes with relevant information' do

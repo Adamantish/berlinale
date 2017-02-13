@@ -8,8 +8,6 @@ module Normalisers
     end
 
     def process
-      # TODO: Turn this off for now until it's fixed
-      @node
       # node = @node.dup
       # node.css('a').each do |anchor|
       #   absolutify(anchor, 'a')
@@ -19,7 +17,7 @@ module Normalisers
       #   absolutify(img, 'img')
       # end
 
-      # node
+      @node
     end
 
     private

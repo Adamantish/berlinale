@@ -33,6 +33,22 @@ module Parsers
     def find_all(within_node, locator)
       within_node.css(CSS_LOCATORS[locator])
     end
+ 
+    def ticket_icons
+      find_all(document, :ticket_icon)
+    end
+
+    def ticket_row(ticket_icon)
+      ticket_icon.parent.parent.parent.parent.parent
+    end
+
+    def map_to_title_row(ticket_row)
+      ticket_row.tap do |row|
+        until find_all(row, :film_row_detail_link) 
+          row = row.next_sibling
+        end
+      end
+    end
 
     def all_film_rows
       @_all_film_rows ||= find_all(document, :film_row).to_a
@@ -68,6 +84,12 @@ module Parsers
       { title: link.children.first.inner_html,
         page_url: "#{Scrapers::BerlinaleProgramme::ORIGIN}#{link.attributes['href'].value}",
         html_row: film_row_node.to_html }
+    end
+
+    def screening_hash(ticket_icon)
+      origin = Scrapers::BerlinaleProgramme::ORIGIN
+      film_row = title_row_for_ticket(ticket_icon)
+      film_row = ::Normalisers::AbsoluteLinks.new(film_row, origin).process
     end
   end
 end

@@ -9,6 +9,8 @@ development:
   database: berlinale_dev
   host: localhost
   port: 5432
+  user: adammisrahi
+
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -18,7 +20,10 @@ test:
   database: berlinale_test
   host: localhost
   port: 5432
+  user: adammisrahi
 
 production:
   <<: *default
   database: berlinale_prod
+  user: adammisrahi
+  
