@@ -8,7 +8,8 @@ module Parsers
       film_row:           'table.programmeTable > tbody > tr',
       film_row_detail_link: 'td.title a',
       date: '.date',
-      time_berlin: '.time'
+      time_berlin: '.time',
+      cinema: '.venue'
     }.freeze
 
     def initialize(body)
@@ -64,13 +65,15 @@ module Parsers
     def screening_hash(ticket_icon)
       screening_row_parser = Parsers::ScreeningRow.new(screening_row(ticket_icon))
       origin = Scrapers::BerlinaleProgramme::ORIGIN
-      title_row = ::Normalisers::AbsoluteLinks.new(title_row(screening_parent_row(ticket_icon)), origin).process
+      title_row = title_row(screening_parent_row(ticket_icon))
+      title_row = ::Normalisers::AbsoluteLinks.new(title_row, origin).process
       link = find_all(title_row, :film_row_detail_link)[0]
 
       { title: link.children.first.inner_html,
         page_url: link.attributes['href'].value,
         html_row: title_row.to_html,
-        starts_at: screening_row_parser.starts_at }
+        starts_at: screening_row_parser.starts_at,
+        cinema: screening_row_parser.cinema }
     end
   end
 end

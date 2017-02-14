@@ -1,7 +1,6 @@
 require 'spec_helper'
 require_relative '../../../lib/scrapers/berlinale_programme'
 require_relative '../../../lib/parsers/berlinale_page'
-require_relative '../../../lib/parsers/screening_row'
 require_relative '../../../lib/normalisers/absolute_links'
 
 RSpec.describe Parsers::BerlinalePage do
@@ -49,7 +48,8 @@ RSpec.describe Parsers::BerlinalePage do
     it 'returns array of hashes with relevant information' do
       expect(screenings.first).to include(title: 'Jokinen',
                                           page_url: 'http://www.berlinale.de/en/programm/berlinale_programm/datenblatt.php?film_id=201712035',
-                                          starts_at: '2017-02-12 16:30:00 +0100'.to_time
+                                          starts_at: '2017-02-12 16:30:00 +0100'.to_time,
+                                          cinema: 'Akademie der Künste (E)'
                                           )
     end
 
