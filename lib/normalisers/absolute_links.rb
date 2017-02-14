@@ -8,22 +8,23 @@ module Normalisers
     end
 
     def process
-      # node = @node.dup
-      # node.css('a').each do |anchor|
-      #   absolutify(anchor, 'a')
-      # end
+      node = @node.dup
+      node.css('a').each do |anchor|
+        absolutify(anchor, 'a')
+      end
 
-      # node.css('img').each do |img|
-      #   absolutify(img, 'img')
-      # end
-
-      @node
+      node.css('img').each do |img|
+        absolutify(img, 'img')
+      end
+      node
+      # @node
     end
 
     private
 
     def absolutify(element, attribute)
-      original_value = element.attributes[attribute].value
+      original_value = element.attributes[attribute].try(:value)
+      return unless original_value
       unless original_value[0..3] == 'http'
         element.attributes[attribute].value = "#{@origin}#{original_value}"
       end

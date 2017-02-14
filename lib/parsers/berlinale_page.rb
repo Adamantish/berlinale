@@ -68,7 +68,7 @@ module Parsers
       link = find_all(title_row, :film_row_detail_link)[0]
 
       { title: link.children.first.inner_html,
-        page_url: "#{origin}#{link.attributes['href'].value}",
+        page_url: link.attributes['href'].value,
         html_row: title_row.to_html,
         starts_at: screening_row_parser.starts_at }
     end
