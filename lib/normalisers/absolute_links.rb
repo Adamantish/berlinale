@@ -10,11 +10,11 @@ module Normalisers
     def process
       node = @node.dup
       node.css('a').each do |anchor|
-        absolutify(anchor, 'a')
+        absolutify(anchor, 'href')
       end
 
       node.css('img').each do |img|
-        absolutify(img, 'img')
+        absolutify(img, 'src')
       end
       node
       # @node
@@ -23,8 +23,7 @@ module Normalisers
     private
 
     def absolutify(element, attribute)
-      original_value = element.attributes[attribute].try(:value)
-      return unless original_value
+      original_value = element.attributes[attribute].value
       unless original_value[0..3] == 'http'
         element.attributes[attribute].value = "#{@origin}#{original_value}"
       end
