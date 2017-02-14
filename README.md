@@ -10,7 +10,6 @@ This site just automates that process. :)
 
 This project has a shelflife of probably just a week but in the evening since it was launched it's looking pretty popular. PRs very welcome! Top issues are:
 
-- You can't narrow down by date
 - Contains none of the supporting the information / photo to help decide if you want to click.
 
 Take a look at the issues page and speak up if you're going to start work on something.
