@@ -22,6 +22,7 @@ RSpec.describe Screening, type: :model do
 
   describe '#update_from_html' do
     it 'updates various attributes using the raw html' do
+      pending 'Refactor of ScreeningRow into Screening when deserialisation works'
       expect(subject).to receive(:set_starts_at).once
       subject.send(:update_from_html)
     end
@@ -30,6 +31,8 @@ RSpec.describe Screening, type: :model do
   describe '#set_starts_at' do
     let(:expected_starts_at) { '2017-02-16 19:00:00 +0100'.to_time }
     it 'constructs a datetime with timezone for the ticket row' do
+      pending 'Refactor of ScreeningRow into Screening when deserialisation works'
+
       expect(subject.starts_at).to be_nil
       subject.send(:set_starts_at)
       expect(subject.starts_at).to eq expected_starts_at
@@ -38,6 +41,8 @@ RSpec.describe Screening, type: :model do
 
   describe '#save' do
     it 'calls #update_from_html when html_row is changed' do
+      pending 'Refactor of ScreeningRow into Screening when deserialisation works'
+
       subject.save
       expect(subject).to receive(:update_from_html).once
       subject.cinema = 'schmoodle'

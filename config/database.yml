@@ -9,7 +9,7 @@ development:
   database: berlinale_dev
   host: localhost
   port: 5432
-  user: adammisrahi
+  # user: adammisrahi
 
 
 # Warning: The database defined as "test" will be erased and
@@ -20,10 +20,10 @@ test:
   database: berlinale_test
   host: localhost
   port: 5432
-  user: adammisrahi
+  # user: adammisrahi
 
 production:
   <<: *default
   database: berlinale_prod
-  user: adammisrahi
-  
+  # user: adammisrahi
+
