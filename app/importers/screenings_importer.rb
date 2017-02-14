@@ -1,6 +1,5 @@
 class ScreeningsImporter
   def process
-    films = []
     page = 0
 
     ActiveRecord::Base.transaction do
@@ -8,12 +7,12 @@ class ScreeningsImporter
       loop do
         page += 1
         body = Scrapers::BerlinaleProgramme.new(page).data
-        films = Parsers::BerlinalePage.new(body).films
-        break unless films
-        films.each do |film|
-          Screening.create!(film)
+        screenings = Parsers::BerlinalePage.new(body).screenings
+        break unless screenings
+        screenings.each do |screening|
+          Screening.create!(screening)
         end
-        puts "Inserting #{films.count} films"
+        puts "Inserting #{screenings.count} screenings"
       end
     end
 

@@ -32,7 +32,6 @@ class Screening < ActiveRecord::Base
     date.strftime('%A %d')
   end
 
-
   def berlin_time_text
     time = starts_at.try(:getlocal, '+01:00')
     time.try(:strftime, '%H:%M')
@@ -47,29 +46,30 @@ class Screening < ActiveRecord::Base
   # -------- Finders -----------
 
   def film_row_detail_link
+    # De-serialized node seems to get extra stuff which sometimes prevents this working.
     find_all(film_node, :film_row_detail_link)[0]
   end
 
   # ----------------------------
 
   def set_from_html
-    return unless screening_node
-    set_starts_at
-    set_page_url
-    set_title
+    # return unless screening_node
+    # set_starts_at
+    # set_page_url
+    # set_title
   end
 
-  def set_starts_at
-    date = find_all(screening_node, :date).inner_html
-    time = find_all(screening_node, :time_berlin).inner_html
-    self.starts_at = "#{date} 2017 #{time} +0100".to_time
-  end
+  # def set_starts_at
+  #   date = find_all(screening_node, :date).inner_html
+  #   time = find_all(screening_node, :time_berlin).inner_html
+  #   self.starts_at = "#{date} 2017 #{time} +0100".to_time
+  # end
 
-  def set_page_url
-    self.page_url = film_row_detail_link.attributes['href'].value
-  end
+  # def set_page_url
+  #   self.page_url = film_row_detail_link.attributes['href'].value
+  # end
 
-  def set_title
-    self.title = film_row_detail_link.children.first.inner_html
-  end
+  # def set_title
+  #   self.title = film_row_detail_link.children.first.inner_html
+  # end
 end
