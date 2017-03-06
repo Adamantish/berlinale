@@ -15,7 +15,6 @@ class Screening < ActiveRecord::Base
     self.html_row = @film_node
   end
 
-
   def screening_node
     # TODO: Making this quiet and fault tolerant till it's fully figured out.
     nodes = find_all(film_node, :ticket_icon)[0].try(:parent)
@@ -46,23 +45,9 @@ class Screening < ActiveRecord::Base
   # -------- Finders -----------
 
   def film_row_detail_link
-    # De-serialized node seems to get extra stuff which sometimes prevents this working.
+    # De-serialized node seems to come wrapped in extra stuff which sometimes prevents this working.
     find_all(film_node, :film_row_detail_link)[0]
   end
 
   # ----------------------------
-
-  def set_from_html
-    # return unless screening_node
-    # set_page_url
-    # set_title
-  end
-
-  # def set_page_url
-  #   self.page_url = film_row_detail_link.attributes['href'].value
-  # end
-
-  # def set_title
-  #   self.title = film_row_detail_link.children.first.inner_html
-  # end
 end
