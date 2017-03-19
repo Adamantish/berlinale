@@ -1,29 +1,31 @@
-%h1 Berlinale 2017
-.updated-time
-  - minutes = ((Time.current - Screening.maximum(:updated_at)) / 60).to_i
-  - time_words = minutes > 0 ? "#{minutes} minutes ago" : "just now"
-  = "Last updated #{time_words}."
 .content
-  %h3
-    = "The #{@screenings.count} showings you can definitely get (#{@film_count} films)"
-  %p
-    There are still a lot tickets which have not gone on sale yet. Track them down, wait then try your luck with
-    = link_to 'the official site search', 'http://www.berlinale.de/en/programm/berlinale_programm/programmsuche.php'
-
-  %p
-    But if you want to get your plans sorted now use this. :)
-
-  - @date_groups.each_pair do |date_heading, screenings|
+  .well
+    %header
+      %h1 Berlinale 2017
+      .updated-time
+        - minutes = Screening.count == 0 ? nil : ((Time.current - Screening.maximum(:updated_at)) / 60).to_i
+        - time_words = minutes > 0 ? "#{minutes} minutes ago" : "just now"
+        = "Last updated #{time_words}."
     %h3
-      = date_heading
-    %table
-      %tbody
+      = "The #{@screenings.count} showings you can definitely get (#{@film_count} films)"
+    %p
+      There are still a lot tickets which have not gone on sale yet. Track them down, wait then try your luck with
+      = link_to 'the official site search', 'http://www.berlinale.de/en/programm/berlinale_programm/programmsuche.php'
+
+    %p
+      But if you want to get your plans sorted now use this. :)
+
+    - @date_groups.each_pair do |date_heading, screenings|
+      %h3.date-heading
+        = date_heading
+      
+      %ol
         - screenings.each do |screening|
-          %tr
-            %td.page_url
-              = link_to screening.title, screening.page_url
-            %td.starts_at
+          %li
+            %span.starts-at
               = screening.berlin_time_text
+            %span.film-title
+              = link_to screening.title, screening.page_url
 
 %footer
   .about

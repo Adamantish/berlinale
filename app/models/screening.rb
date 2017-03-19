@@ -3,8 +3,6 @@ require 'nokogiri'
 class Screening < ActiveRecord::Base
   CSS_LOCATORS = Parsers::BerlinalePage::CSS_LOCATORS
 
-  before_save :set_from_html, if: proc { |screening| screening.html_row_changed? }
-
   def film_node
     # memoize here to prevent unnecessary de-serializations when working with the model
     @film_node ||= Nokogiri::HTML(html_row)
@@ -51,18 +49,5 @@ class Screening < ActiveRecord::Base
   end
 
   # ----------------------------
-
-  def set_from_html
-    # return unless screening_node
-    # set_page_url
-    # set_title
-  end
-
-  # def set_page_url
-  #   self.page_url = film_row_detail_link.attributes['href'].value
-  # end
-
-  # def set_title
-  #   self.title = film_row_detail_link.children.first.inner_html
-  # end
+  
 end
