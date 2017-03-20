@@ -1,7 +1,9 @@
 .content
   .well
     %header
-      %h1 Berlinale 2017
+      %h1.hidden
+        Berlinale Now
+      = image_tag('now_berlinale_logo_tilt.png', class: 'logo', alt: 'Bear say Nowwww!')
       .updated-time
         - minutes = Screening.count == 0 ? nil : ((Time.current - Screening.maximum(:updated_at)) / 60).to_i
         - time_words = minutes > 0 ? "#{minutes} minutes ago" : "just now"
@@ -30,3 +32,4 @@
 %footer
   .about
     = link_to 'Me on twitter', 'https://twitter.com/MissRahee'
+    = link_to 'Contribute on Github', 'https://github.com/Adamantish/berlinale'
