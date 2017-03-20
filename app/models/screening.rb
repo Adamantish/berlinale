@@ -3,8 +3,6 @@ require 'nokogiri'
 class Screening < ActiveRecord::Base
   CSS_LOCATORS = Parsers::BerlinalePage::CSS_LOCATORS
 
-  before_save :set_from_html, if: proc { |screening| screening.html_row_changed? }
-
   def film_node
     # memoize here to prevent unnecessary de-serializations when working with the model
     @film_node ||= Nokogiri::HTML(html_row)

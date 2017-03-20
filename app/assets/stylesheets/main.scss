@@ -1,34 +1,89 @@
-body {
-  background-color: #d82b47;
-  font-size: 1.2rem;
-  font-family: helvetica;
-  color: whitesmoke;
-}
+$well-width: 1000px;
 
-p {
-  font-size: 0.75em;
-}
+html {
+  header {
+    background-color: #d82b47;
+    color: white;
+    padding: 0.5em 0.5em 0.8em 0.5em;
+    position: relative;
+    left: -1em;
+    top: -5px;
+    width: $well-width + 100px;
+  }
 
-footer {
-  margin: 2em 1em;
-}
+  .logo {
+    max-width: 70%;
+    position: relative;
+    left: 2em;
+  }
 
-td {
-  padding: 0.1em 0.5em;
-}
+  .content {
+    padding: 0 10px;
+  }
 
-.content {
-  color: black;
-  left: 0.1em;
-  top: 1em;
-  background-color: whitesmoke;
-  position: relative;
-  padding: 0.2em 1em;
-}
+  .well {
+    color: black;
+    background-color: whitesmoke;
+    left: 0.1em;
+    position: relative;
+    margin: auto;
+    padding: 0.2em 1em;
+    max-width: $well-width;    
+    box-shadow: 1px 3px 17px 0px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+  }
 
-.updated-time {
-  font-style: italic;
-  font-size: 0.7em;
-  top: -1.8em;
-  position: relative;
+  body {
+    background-color: hsla(219, 43%, 91%, 1);
+    font-size: 1.2rem;
+    font-family: helvetica;
+    margin: 0 0;
+  }
+
+  h1 {
+    margin: 0 0.5em;
+  }
+
+  .date-heading {
+    margin-top: 2.5em;
+  }
+
+  p {
+    font-size: 0.75em;
+  }
+
+  footer {
+    margin: 2em 1em;
+  }
+
+  ol {
+    padding: 0;
+  }
+
+  li {
+    list-style: none;
+    background-color: white;
+    margin: 0.3em;
+    padding: 0.5em;
+    box-shadow: 2px 1px 2px 0px rgba(0, 0, 0, 0.08);
+  }
+
+  .updated-time {
+    font-style: italic;
+    font-size: 0.7em;
+    padding: 0 2.5em;
+    position: relative;
+  }
+
+  .film-title {
+        width: 20em;
+  }
+
+  .hidden {
+    display: none;
+  }
+  
+  .about a {
+    display: block;
+  }
 }
