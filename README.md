@@ -2,7 +2,7 @@
 
 ### Which Berlinale film tickets are available online right now?
 
-#### A website which lives [here](http://nowberlinale.herokuapp.com)
+#### A website which is now frozen in time on Valentine's Day 2017 [here](http://nowberlinale.herokuapp.com)
 
 The official berlinale.de website is a bit annoying. If you don't know exactly what you're after you have to click through 28 pages scrutinising tiny little icons to see if they're grey (good) or white (not good).
 
