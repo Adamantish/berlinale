@@ -3,8 +3,8 @@ require 'nokogiri'
 module Parsers
   class BerlinalePage
     CSS_LOCATORS = {
-      ticket_icon:        'a.sprite.tickets_N',
-      future_ticket_icon: 'a.sprite.tickets_I',
+      ticket_icon:        'span.sprite.tickets_N',
+      future_ticket_icon: 'span.sprite.tickets_I',
       film_row:           'table.programmeTable > tbody > tr',
       film_row_detail_link: 'td.title a',
       date: '.date',
@@ -33,7 +33,7 @@ module Parsers
 
     # TODO: Switch this for an array of screening rows
     def ticket_icons
-      find_all(document, :ticket_icon)
+      find_all(document, :future_ticket_icon)
     end
 
     def all_film_rows

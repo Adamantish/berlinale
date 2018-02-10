@@ -15,7 +15,7 @@ class Screening < ActiveRecord::Base
 
   def screening_node
     # TODO: Making this quiet and fault tolerant till it's fully figured out.
-    nodes = find_all(film_node, :ticket_icon)[0].try(:parent)
+    nodes = find_all(film_node, :future_ticket_icon)[0].try(:parent)
     return unless nodes
     nodes = nodes.try(:parent)
     return unless nodes
