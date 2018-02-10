@@ -12,7 +12,7 @@ module Scrapers
       if success?
         response.body
       else
-        fail InvalidResponseError, "Invalid response status: '#{response.status}'"
+        raise InvalidResponseError, "Invalid response status: '#{response.status}'"
       end
     rescue => e
       raise ScrapingError, e
@@ -25,11 +25,11 @@ module Scrapers
     end
 
     def origin
-      fail NotImplementedError
+      raise NotImplementedError
     end
 
     def path
-      fail NotImplementedError
+      raise NotImplementedError
     end
 
     def query_hash
@@ -41,7 +41,7 @@ module Scrapers
     end
 
     def open_timeout
-      5 # seconds
+      15 # seconds
     end
 
     def max_retries
@@ -85,7 +85,7 @@ module Scrapers
         sleep retry_wait if try_no < max_retries - 1
       end
 
-      fail ScrapingError, "Fetching '#{path}' failed with #{res.status} error."
+      raise ScrapingError, "Fetching '#{path}' failed with #{res.status} error."
     end
 
     def connection

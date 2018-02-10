@@ -24,7 +24,7 @@ module Normalisers
 
     def absolutify(element, attribute)
       original_value = element.attributes[attribute].value
-      unless original_value[0..3] == 'http'
+      unless original_value.starts_with? 'http'
         element.attributes[attribute].value = "#{@origin}#{original_value}"
       end
     end

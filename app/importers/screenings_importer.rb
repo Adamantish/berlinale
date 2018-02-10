@@ -9,9 +9,7 @@ class ScreeningsImporter
         body = Scrapers::BerlinaleProgramme.new(page).data
         screenings = Parsers::BerlinalePage.new(body).screenings
         break unless screenings
-        screenings.each do |screening|
-          Screening.create!(screening)
-        end
+        screenings.each { |screening| Screening.create!(screening) }
         puts "Inserting #{screenings.count} screenings"
       end
     end

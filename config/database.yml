@@ -24,6 +24,6 @@ test:
 
 production:
   <<: *default
-  database: berlinale_prod
+  database: berlinale_dev
   # user: adammisrahi
 

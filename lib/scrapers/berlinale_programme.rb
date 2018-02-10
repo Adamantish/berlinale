@@ -2,7 +2,7 @@ require_relative 'generic'
 
 module Scrapers
   class BerlinaleProgramme < Generic
-    ORIGIN = 'http://www.berlinale.de'.freeze
+    ORIGIN = 'https://www.berlinale.de'.freeze
 
     def initialize(page)
       super(page)
@@ -13,7 +13,7 @@ module Scrapers
     protected
 
     def max_retries
-      1
+      2
     end
 
     def origin

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://www.berlinale.de/en/programm/berlinale_programm/programmsuche.php?page=100
+    uri: https://www.berlinale.de/en/programm/berlinale_programm/programmsuche.php?page=100
     body:
       encoding: US-ASCII
       string: ''
@@ -882,6 +882,6 @@ http_interactions:
         bmZpZ3VyZWQgPSB0cnVlOwo8L3NjcmlwdD4KPCEtLSBzOjEyMjcxMiB8IHA6
         MTI0ODM4IHwgdHJhY2tpbmcgfCBFTiB8IDUuMi40MjQuNzQyMzEgfCAyMDE3
         LTAyLTExIDEyOjI5IC0tPgo8L2JvZHk+CjwvaHRtbD4=
-    http_version: 
+    http_version:
   recorded_at: Sat, 11 Feb 2017 18:59:18 GMT
 recorded_with: VCR 3.0.3

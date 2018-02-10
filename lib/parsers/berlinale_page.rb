@@ -14,7 +14,7 @@ module Parsers
 
     def initialize(body)
       @body = body
-    end
+   end
 
     def screenings
       return nil if all_film_rows.empty?
@@ -71,7 +71,7 @@ module Parsers
 
       { title: link.children.first.inner_html,
         page_url: link.attributes['href'].value,
-        html_row: title_row.to_html,
+        # html_row: title_row.to_html,
         starts_at: screening_row_parser.starts_at,
         cinema: screening_row_parser.cinema }
     end

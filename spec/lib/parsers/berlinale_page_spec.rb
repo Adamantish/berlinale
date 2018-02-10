@@ -47,7 +47,7 @@ RSpec.describe Parsers::BerlinalePage do
     let(:screenings) { subject.screenings }
     it 'returns array of hashes with relevant information' do
       expect(screenings.first).to include(title: 'Jokinen',
-                                          page_url: 'http://www.berlinale.de/en/programm/berlinale_programm/datenblatt.php?film_id=201712035',
+                                          page_url: 'https://www.berlinale.de/en/programm/berlinale_programm/datenblatt.php?film_id=201712035',
                                           starts_at: '2017-02-12 16:30:00 +0100'.to_time,
                                           cinema: 'Akademie der Künste (E)'
                                           )
