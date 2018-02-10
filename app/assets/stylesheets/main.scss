@@ -11,12 +11,6 @@ html {
     width: $well-width + 100px;
   }
 
-  .logo {
-    max-width: 70%;
-    position: relative;
-    left: 2em;
-  }
-
   .content {
     padding: 0 10px;
   }
@@ -77,13 +71,5 @@ html {
 
   .film-title {
         width: 20em;
-  }
-
-  .hidden {
-    display: none;
-  }
-  
-  .about a {
-    display: block;
   }
 }
