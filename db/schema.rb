@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170212160946) do
+ActiveRecord::Schema.define(version: 20180211155716) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,15 +27,18 @@ ActiveRecord::Schema.define(version: 20170212160946) do
   add_index "requests", ["remote_ip"], name: "index_requests_on_remote_ip", using: :btree
 
   create_table "screenings", force: :cascade do |t|
-    t.string   "title",      null: false
+    t.string   "title",         null: false
     t.string   "page_url"
     t.string   "image_url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.string   "html_row"
     t.string   "buy_url"
     t.string   "cinema"
     t.datetime "starts_at"
+    t.string   "ticket_status"
   end
+
+  add_index "screenings", ["ticket_status"], name: "index_screenings_on_ticket_status", using: :btree
 
 end

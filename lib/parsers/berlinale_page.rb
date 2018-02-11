@@ -5,6 +5,7 @@ module Parsers
     CSS_LOCATORS = {
       ticket_icon:        'span.sprite.tickets_N',
       future_ticket_icon: 'span.sprite.tickets_I',
+      never_ticket_icon: 'span.sprite.tickets_Never',
       film_row:           'table.programmeTable > tbody > tr',
       film_row_detail_link: 'td.title a',
       date: '.date',
@@ -33,7 +34,7 @@ module Parsers
 
     # TODO: Switch this for an array of screening rows
     def ticket_icons
-      find_all(document, :future_ticket_icon)
+      find_all(document, :future_ticket_icon) + find_all(document, :ticket_icon) + find_all(document, :never_ticket_icon) 
     end
 
     def all_film_rows
@@ -62,6 +63,13 @@ module Parsers
       row
     end
 
+    def ticket_status(ticket_icon)
+      # Acch repeating myself but rushing now
+      lookup = { 'tickets_I' => 'future', 'tickets_N' => 'current', 'tickets_Never' => 'never' }
+      icon_class = ticket_icon.attributes['class'].value.match(/\btickets_.+/).to_s.strip
+      lookup[icon_class]
+    end
+
     def screening_hash(ticket_icon)
       screening_row_parser = Parsers::ScreeningRow.new(screening_row(ticket_icon))
       origin = Scrapers::BerlinaleProgramme::ORIGIN
@@ -73,7 +81,8 @@ module Parsers
         page_url: link.attributes['href'].value,
         # html_row: title_row.to_html,
         starts_at: screening_row_parser.starts_at,
-        cinema: screening_row_parser.cinema }
+        cinema: screening_row_parser.cinema,
+        ticket_status: ticket_status(ticket_icon) }
     end
   end
 end

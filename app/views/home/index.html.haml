@@ -1,7 +1,7 @@
 .content
   .well
     %header
-      %h1 Berlinale 2017
+      %h1 Berlinale 2018
       .updated-time
         - minutes = Screening.count == 0 ? nil : ((Time.current - Screening.maximum(:updated_at)) / 60).to_i
         - time_words = minutes > 0 ? "#{minutes} minutes ago" : "just now"
@@ -15,17 +15,18 @@
     %p
       But if you want to get your plans sorted now use this. :)
 
-    - @date_groups.each_pair do |date_heading, screenings|
-      %h3.date-heading
-        = date_heading
-      
-      %ol
-        - screenings.each do |screening|
-          %li
-            %span.starts-at
-              = screening.berlin_time_text
-            %span.film-title
-              = link_to screening.title, screening.page_url
+    .tabs
+      - @date_groups.each_pair do |date_heading, screenings|
+        %h3.date-heading
+          = date_heading
+        
+        %ol
+          - screenings.each do |screening|
+            %li
+              %span.starts-at
+                = screening.berlin_time_text
+              %span.film-title
+                = link_to screening.title, screening.page_url
 
 %footer
   .about

@@ -18,7 +18,7 @@ RSpec.describe Parsers::BerlinalePage do
     end
 
     it 'returns array of hashes with relevant information' do
-      expect(ticket_icons.count).to eq 12
+      expect(ticket_icons.count).to eq 41
       expect(ticket_icons.first.to_html).to eq expected_first_icon_html
     end
   end
@@ -46,10 +46,10 @@ RSpec.describe Parsers::BerlinalePage do
   describe '#screenings' do
     let(:screenings) { subject.screenings }
     it 'returns array of hashes with relevant information' do
-      expect(screenings.first).to include(title: 'Jokinen',
-                                          page_url: 'https://www.berlinale.de/en/programm/berlinale_programm/datenblatt.php?film_id=201712035',
-                                          starts_at: '2017-02-12 16:30:00 +0100'.to_time,
-                                          cinema: 'Akademie der Künste (E)'
+      expect(screenings.first).to include(title: 'Premières armes',
+                                          page_url: 'https://www.berlinale.de/en/programm/berlinale_programm/datenblatt.php?film_id=201816369',
+                                          starts_at: '2017-02-20 16:00:00 +0100'.to_time,
+                                          cinema: 'CineStar 8 (E)'
                                           )
     end
 

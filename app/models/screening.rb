@@ -3,6 +3,9 @@ require 'nokogiri'
 class Screening < ActiveRecord::Base
   CSS_LOCATORS = Parsers::BerlinalePage::CSS_LOCATORS
 
+  scope :current, -> { where(ticket_status: 'current') }
+  scope :future, -> { where(ticket_status: 'future') }
+  
   def film_node
     # memoize here to prevent unnecessary de-serializations when working with the model
     @film_node ||= Nokogiri::HTML(html_row)
