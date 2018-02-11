@@ -34,7 +34,7 @@ module Parsers
 
     # TODO: Switch this for an array of screening rows
     def ticket_icons
-      find_all(document, :future_ticket_icon) + find_all(document, :ticket_icon) + find_all(document, :never_ticket_icon) 
+      find_all(document, :ticket_icon) # + find_all(document, :future_ticket_icon) + find_all(document, :never_ticket_icon) 
     end
 
     def all_film_rows
@@ -82,7 +82,8 @@ module Parsers
         # html_row: title_row.to_html,
         starts_at: screening_row_parser.starts_at,
         cinema: screening_row_parser.cinema,
-        ticket_status: ticket_status(ticket_icon) }
+        # ticket_status: ticket_status(ticket_icon),
+      }
     end
   end
 end
