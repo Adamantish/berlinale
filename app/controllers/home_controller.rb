@@ -20,7 +20,6 @@ class HomeController < ApplicationController
   end
 
   def status_scope(scope)
-    return scope # until we have migration done
     status = params['status'] || 'current'
     scope.where(ticket_status: status)
   end
