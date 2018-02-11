@@ -13,7 +13,7 @@ module Parsers
     def starts_at
       date = find_all(row_node, :date).inner_text
       time = find_all(row_node, :time_berlin).inner_text
-      "#{date} 2017 #{time} +0100".to_time
+      "#{date} 2018 #{time} +0100".to_time
     end
 
     def cinema
