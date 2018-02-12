@@ -3,7 +3,7 @@ require 'nokogiri'
 module Parsers
   class BerlinalePage
     CSS_LOCATORS = {
-      ticket_icon:        'span.sprite.tickets_N',
+      ticket_icon:        'a.sprite.tickets_N',
       future_ticket_icon: 'span.sprite.tickets_I',
       never_ticket_icon: 'span.sprite.tickets_Never',
       film_row:           'table.programmeTable > tbody > tr',
