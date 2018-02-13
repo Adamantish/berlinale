@@ -7,9 +7,9 @@
         - time_words = minutes > 0 ? "#{minutes} minutes ago" : "just now"
         = "Last updated #{time_words}."
     %h3
-      = "The #{@screenings.count} showings you can definitely get (#{@film_count} films)"
+      = "The #{@screenings.count} screenings you can buy right now"
     %p
-      There are still a lot tickets which have not gone on sale yet. Track them down, wait then try your luck with
+      = "There are still #{@future_screening_count} screenings of #{@future_film_count} films which haven't gone on sale yet. You can track them down with "
       = link_to 'the official site search', 'http://www.berlinale.de/en/programm/berlinale_programm/programmsuche.php'
 
     %p
