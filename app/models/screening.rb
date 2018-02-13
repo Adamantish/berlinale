@@ -3,6 +3,8 @@ require 'nokogiri'
 class Screening < ActiveRecord::Base
   CSS_LOCATORS = Parsers::BerlinalePage::CSS_LOCATORS
 
+  before_save :tally_minutes_on_sale
+
   belongs_to :film
   
   scope :current, -> { where(ticket_status: 'current') }
@@ -44,6 +46,12 @@ class Screening < ActiveRecord::Base
   end
 
   private
+
+  def tally_minutes_on_sale
+    # This allows us to tally up multiple rounds of the same screening being offered for sale
+    return true unless soldout_at.present? && soldout_at_was.nil? && sale_began_at
+    self.minutes_on_sale = (minutes_on_sale || 0) + ((soldout_at - sale_began_at) / 60)
+  end
 
   def find_all(within_node, locator)
     within_node.css(CSS_LOCATORS[locator])
