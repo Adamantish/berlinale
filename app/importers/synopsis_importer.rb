@@ -7,7 +7,7 @@ class SynopsisImporter
       film.update!(synopsis: synopsis)
     end
 
-    "#{films.count} synopses imported"
+    p "#{films.count} synopses imported"
   end
 
   private

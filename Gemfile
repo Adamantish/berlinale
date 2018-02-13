@@ -1,9 +1,9 @@
-ruby '2.2.1'
+ruby '2.3.1'
 source 'https://rubygems.org'
 
 gem 'pg'
 gem 'rails_12factor'
-gem 'rails', '~>4.2'
+gem 'rails', '~>4.2.4'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
@@ -15,7 +15,7 @@ group :development, :test do
   # gem 'byebug'
   gem 'rspec-rails'
   gem 'cucumber-rails', :require => false
-  gem 'pry-byebug'
+  # gem 'pry-byebug'
   gem 'webmock'
 end
 
@@ -29,8 +29,6 @@ end
 group :test do
   gem 'database_cleaner'
   gem 'launchy'
-  gem 'poltergeist'
-  gem 'capybara'
   gem 'vcr'
   # gem 'selenium'
 end
