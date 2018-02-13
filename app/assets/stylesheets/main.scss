@@ -56,6 +56,7 @@ html {
 
   li {
     list-style: none;
+    min-height: 117px;
     background-color: white;
     margin: 0.3em;
     padding: 0.5em;
@@ -66,7 +67,7 @@ html {
     vertical-align: text-top;
     padding-right: 1em;
   }
-  
+
   .updated-time {
     font-style: italic;
     font-size: 0.7em;
@@ -76,6 +77,14 @@ html {
 
   .film-title {
         width: 20em;
+  }
+
+  .synopsis {
+    display: inline;
+    font-size: 0.9em;
+    font-style: italic;
+    font-family: monospace;
+    position: absolute;
   }
 
   .tabs {

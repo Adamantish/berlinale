@@ -12,17 +12,17 @@ module Parsers
       time_berlin: '.time',
       cinema: '.venue',
       image_url: 'a.still img',
-      synopsis: 'tooltip tooltipInner',
+      synopsis: '.title .tooltipInner',
     }.freeze
 
     def initialize(body)
       @body = body
    end
 
-    def screenings
+    def results
       return nil if all_film_rows.empty?
       ticket_icons.map do |icon|
-        screening_hash(icon)
+        results_hash(icon)
       end
     end
 
@@ -76,25 +76,33 @@ module Parsers
       find_all(title_row, :image_url).first.attributes['src'].value
     end
 
-    def synopsis(title_row)
-      find_all(title_row, :synopsis).child
+    def synopsis_id(title_row)
+      find_all(title_row, :synopsis).first.attributes['class'].value.match(/\d+\}/).to_s.to_i
     end
 
-    def screening_hash(ticket_icon)
+    def results_hash(ticket_icon)
       screening_row_parser = Parsers::ScreeningRow.new(screening_row(ticket_icon))
       origin = Scrapers::BerlinaleProgramme::ORIGIN
       title_row = title_row(screening_parent_row(ticket_icon))
       title_row = ::Normalisers::AbsoluteLinks.new(title_row, origin).process
       link = find_all(title_row, :film_row_detail_link)[0]
+      title = link.children.first.inner_html
 
-      { title: link.children.first.inner_html,
-        page_url: link.attributes['href'].value,
-        # html_row: title_row.to_html,
-        image_url: image_url(title_row),
-        # synopsis: synopsis(title_row),
-        starts_at: screening_row_parser.starts_at,
-        cinema: screening_row_parser.cinema,
-        ticket_status: ticket_status(ticket_icon) }
+      { screening: { 
+          title: title,
+          page_url: link.attributes['href'].value,
+          # html_row: title_row.to_html,
+          image_url: image_url(title_row),
+          # synopsis: synopsis(title_row),
+          starts_at: screening_row_parser.starts_at,
+          cinema: screening_row_parser.cinema,
+          ticket_status: ticket_status(ticket_icon) }, 
+
+        film: {
+          title: title,
+          synopsis_id: synopsis_id(title_row),
+        }
+      }
     end
   end
 end

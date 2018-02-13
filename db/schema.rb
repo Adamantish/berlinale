@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180211155716) do
+ActiveRecord::Schema.define(version: 20180213021818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "films", force: :cascade do |t|
+    t.string   "title"
+    t.integer  "synopsis_id"
+    t.text     "synopsis"
+    t.text     "languages",   default: [],              array: true
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "films", ["title"], name: "index_films_on_title", using: :btree
 
   create_table "requests", force: :cascade do |t|
     t.integer  "kind"
@@ -27,18 +38,21 @@ ActiveRecord::Schema.define(version: 20180211155716) do
   add_index "requests", ["remote_ip"], name: "index_requests_on_remote_ip", using: :btree
 
   create_table "screenings", force: :cascade do |t|
-    t.string   "title",         null: false
+    t.string   "title",                      null: false
     t.string   "page_url"
     t.string   "image_url"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.string   "html_row"
     t.string   "buy_url"
     t.string   "cinema"
     t.datetime "starts_at"
     t.string   "ticket_status"
+    t.string   "subtitles",     default: [],              array: true
+    t.integer  "film_id"
   end
 
+  add_index "screenings", ["film_id"], name: "index_screenings_on_film_id", using: :btree
   add_index "screenings", ["ticket_status"], name: "index_screenings_on_ticket_status", using: :btree
 
 end

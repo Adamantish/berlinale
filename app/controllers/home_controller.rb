@@ -16,7 +16,7 @@ class HomeController < ApplicationController
 
   def filtered_scope
     scope = @screenings = Screening.order(:starts_at)
-    scope = status_scope(scope)
+    scope = status_scope(scope).eager_load(:film)
   end
 
   def status_scope(scope)

@@ -1,3 +1,5 @@
+require 'nokogiri'
+
 class ScreeningsImporter
   def process
     page = 0
@@ -7,10 +9,13 @@ class ScreeningsImporter
       loop do
         page += 1
         body = Scrapers::BerlinaleProgramme.new(page).data
-        screenings = Parsers::BerlinalePage.new(body).screenings
-        break unless screenings
-        screenings.each { |screening| Screening.create!(screening) }
-        puts "Inserting #{screenings.count} screenings"
+        results = Parsers::BerlinalePage.new(body).results
+        break unless results
+        results.each do |result| 
+          film = Film.find_or_create_by(result[:film])
+          Screening.create!(result[:screening].merge(film_id: film.id))
+        end
+        puts "Inserting #{results.count} screenings"
       end
     end
 

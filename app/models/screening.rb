@@ -3,6 +3,8 @@ require 'nokogiri'
 class Screening < ActiveRecord::Base
   CSS_LOCATORS = Parsers::BerlinalePage::CSS_LOCATORS
 
+  belongs_to :film
+  
   scope :current, -> { where(ticket_status: 'current') }
   scope :future, -> { where(ticket_status: 'future') }
   
