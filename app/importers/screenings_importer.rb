@@ -27,7 +27,7 @@ class ScreeningsImporter
 
   def get_the_previous
     @the_previous ||= {}.tap do |hsh|
-      Screening.where(ticket_status: ['current', 'future']).to_a.each do |screening|
+      Screening.all.to_a.each do |screening|
         hsh[screening.identifier] = screening
       end
     end
