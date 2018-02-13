@@ -17,7 +17,7 @@ module Parsers
     end
 
     def cinema
-      thing = find_all(row_node, :cinema).inner_text
+      find_all(row_node, :cinema).inner_text
     end
 
     private

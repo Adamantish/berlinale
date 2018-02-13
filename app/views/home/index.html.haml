@@ -23,10 +23,12 @@
         %ol
           - screenings.each do |screening|
             %li
-              %span.starts-at
-                = screening.berlin_time_text
-              %span.film-title
-                = link_to screening.title, screening.page_url
+              %a{href: screening.page_url}
+                =image_tag screening.image_url
+                %span.film-title
+                  = link_to screening.title, screening.page_url
+                %span.starts-at
+                  = screening.berlin_time_text
 
 %footer
   .about
