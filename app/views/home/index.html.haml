@@ -23,14 +23,14 @@
         %ol
           - screenings.each do |screening|
             %li
-              %a{href: screening.page_url}
-                =image_tag screening.image_url
+              =image_tag screening.image_url
+              .info
                 %span.film-title
                   = link_to screening.film.title.strip, screening.page_url
                 %span.starts-at
                   = screening.berlin_time_text
-                / .synopsis
-                /   = screening.film.synopsis
+                .synopsis
+                  = screening.film.synopsis
 
 %footer
   .about

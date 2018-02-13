@@ -64,7 +64,7 @@ html {
   }
 
   img {
-    vertical-align: text-top;
+    vertical-align: top;
     padding-right: 1em;
   }
 
@@ -79,12 +79,24 @@ html {
         width: 20em;
   }
 
+  .big-link {
+    display: inline-block;
+    width: 200px;
+    vertical-align: top;
+  }
+
+  .info {
+    display: inline-block;
+    width: calc(100% - 200px);
+  }
+
   .synopsis {
-    display: inline;
+    display: inline-block;
+    position: relative; 
     font-size: 0.9em;
     font-style: italic;
-    font-family: monospace;
-    position: absolute;
+    font-family: serif;
+    padding-top: 0.3em;
   }
 
   .tabs {
