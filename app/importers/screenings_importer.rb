@@ -41,7 +41,7 @@ class ScreeningsImporter
 
       transition = [ticket_status_was, screening.ticket_status]
       screening.sale_began_at ||= Time.now.utc if transition == ['future', 'current'] || transition == [nil, 'current']
-      screening.soldout_at = Time.now.utc      if transition == ['current', 'soldout'] && screening.sale_began_at
+      screening.soldout_at = Time.now.utc      if transition == ['current', 'soldout']
     end
   end
 end
