@@ -39,6 +39,10 @@ class Screening < ActiveRecord::Base
     time.try(:strftime, '%H:%M')
   end
 
+  def identifier
+    "#{film_id}|#{cinema}|#{starts_at}"
+  end
+
   private
 
   def find_all(within_node, locator)

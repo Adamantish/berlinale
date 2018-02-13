@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180213021818) do
+ActiveRecord::Schema.define(version: 20180213145227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,9 +20,10 @@ ActiveRecord::Schema.define(version: 20180213021818) do
     t.string   "title"
     t.integer  "synopsis_id"
     t.text     "synopsis"
-    t.text     "languages",   default: [],              array: true
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.text     "languages",               default: [],              array: true
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.integer  "average_sellout_minutes"
   end
 
   add_index "films", ["title"], name: "index_films_on_title", using: :btree
@@ -50,6 +51,8 @@ ActiveRecord::Schema.define(version: 20180213021818) do
     t.string   "ticket_status"
     t.string   "subtitles",     default: [],              array: true
     t.integer  "film_id"
+    t.datetime "sale_began_at"
+    t.datetime "soldout_at"
   end
 
   add_index "screenings", ["film_id"], name: "index_screenings_on_film_id", using: :btree
