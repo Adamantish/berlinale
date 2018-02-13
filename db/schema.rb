@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180213192020) do
+ActiveRecord::Schema.define(version: 20180213195805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20180213192020) do
     t.datetime "sale_began_at"
     t.datetime "soldout_at"
     t.integer  "minutes_on_sale"
+    t.integer  "sale_rounds"
   end
 
   add_index "screenings", ["film_id"], name: "index_screenings_on_film_id", using: :btree

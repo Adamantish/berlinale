@@ -51,6 +51,7 @@ class Screening < ActiveRecord::Base
     # This allows us to tally up multiple rounds of the same screening being offered for sale
     return true unless soldout_at.present? && soldout_at_was.nil? && sale_began_at
     self.minutes_on_sale = (minutes_on_sale || 0) + ((soldout_at - sale_began_at) / 60)
+    self.sale_rounds     = (sale_rounds || 0) + 1
   end
 
   def find_all(within_node, locator)
