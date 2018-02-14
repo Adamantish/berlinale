@@ -1,5 +1,20 @@
 require 'nokogiri'
 
+# --- Yeah this should be in a separate file really but hey it's tiny
+class StateTransition
+  def initialize(from:, to:)
+    @tuple = [from, to]
+  end
+
+  def moves_from?(state)
+    @tuple[0] == state && @tuple[1] != state
+  end
+
+  def moves_to?(state)
+    @tuple[0] != state && @tuple[1] == state
+  end
+end
+
 class ScreeningsImporter
   def process
     page = 0
@@ -37,9 +52,11 @@ class ScreeningsImporter
     Screening.new(screening_hash.merge(film_id: film.id)).tap do |screening|
       previous_screening = @the_previous[screening.identifier]
       screening.minutes_on_sale = previous_screening&.minutes_on_sale
-      screening.sale_rounds    = previous_screening&.sale_rounds
+      screening.sale_rounds     = previous_screening&.sale_rounds
 
-      if previous_screening&.ticket_status != 'current' && screening.ticket_status == 'current'
+      transition = StateTransition.new(from: previous_screening&.ticket_status, to: screening.ticket_status)
+
+      if transition.moves_to?('current')
         #reset for a new round of sale
         screening.sale_began_at = nil
         screening.soldout_at = nil
@@ -48,16 +65,17 @@ class ScreeningsImporter
         screening.soldout_at    = previous_screening&.soldout_at
       end
 
-      transition = [previous_screening&.ticket_status, screening.ticket_status]
-
-      screening.sale_began_at = screening.sale_began_at || Time.now.utc if transition == ['future', 'current'] || transition == [nil, 'current']
-      screening.soldout_at = screening.soldout_at || Time.now.utc if transition == ['current', 'soldout']
+      screening.sale_began_at ||=  Time.now.utc if transition.moves_to?('current')
+      screening.soldout_at    ||=  Time.now.utc if transition.moves_from?('current')
       screening = set_sales_tallies(screening, previous_screening)
     end
   end
 
+
+
   def set_sales_tallies(screening, previous_screening)
     return true unless screening.soldout_at.present? && previous_screening&.soldout_at.nil? && screening.sale_began_at
+    # Note this logic is mostly repeated in the Screening class in the calc methods. Not super easy to refactor
     screening.minutes_on_sale = (previous_screening.minutes_on_sale || 0) + ((screening.soldout_at - screening.sale_began_at) / 60)
     screening.sale_rounds     = (previous_screening.sale_rounds || 0) + 1
     screening

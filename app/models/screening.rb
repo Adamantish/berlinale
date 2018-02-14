@@ -7,6 +7,8 @@ class Screening < ActiveRecord::Base
   
   scope :current, -> { where(ticket_status: 'current') }
   scope :future, -> { where(ticket_status: 'future') }
+  scope :soldout, -> { where(ticket_status: 'soldout') }
+  scope :sales_recorded, -> { where.not(sale_rounds: nil) }
   
   def film_node
     # memoize here to prevent unnecessary de-serializations when working with the model
@@ -16,6 +18,24 @@ class Screening < ActiveRecord::Base
   def film_node=(film_row_node)
     @film_node = film_row_node.to_html
     self.html_row = @film_node
+  end
+
+  def calc_minutes_on_sale
+    return minutes_on_sale unless can_calc_current_sale_metrics?
+    minutes_on_sale + currently_on_sale_minutes
+  end
+
+  def calc_sale_rounds
+    return sale_rounds unless can_calc_current_sale_metrics?
+    sale_rounds + 1
+  end
+
+  def calc_average_sale_duration
+    calc_minutes_on_sale.to_f / calc_sale_rounds
+  end
+
+  def can_calc_current_sale_metrics?
+    sale_began_at && !soldout_at
   end
 
   def screening_node
@@ -55,4 +75,11 @@ class Screening < ActiveRecord::Base
   end
 
   # ----------------------------
+  private
+
+  def currently_on_sale_minutes
+    return 0 unless ticket_status == 'current'
+    return nil unless sale_began_at
+    ((Time.now.utc - sale_began_at) / 60).to_i
+  end
 end

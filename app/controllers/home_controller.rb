@@ -18,8 +18,15 @@ class HomeController < ApplicationController
   def filtered_scope
     scope = @screenings = Screening.order(:starts_at)
     scope = status_scope(scope).eager_load(:film)
+    scope = fast_sellers_scope(scope) if params[:hot_sellers] == 'true'
+    scope
   end
 
+  def fast_sellers_scope(scope)
+    fast_selling_film_ids = Film.where('average_sellout_minutes < 90').ids
+    scope.where(film_id: fast_selling_film_ids)
+  end
+  
   def status_scope(scope)
     status = params['status'] || 'current'
     scope.where(ticket_status: status)
