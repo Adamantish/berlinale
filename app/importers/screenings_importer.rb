@@ -36,6 +36,9 @@ class ScreeningsImporter
   def provide_screening(screening_hash, film)
     Screening.new(screening_hash.merge(film_id: film.id)).tap do |screening|
       previous_screening = @the_previous[screening.identifier]
+      screening.minutes_on_sale = previous_screening&.minutes_on_sale
+      screening.sale_rounds    = previous_screening&.sale_rounds
+
       if previous_screening&.ticket_status != 'current' && screening.ticket_status == 'current'
         #reset for a new round of sale
         screening.sale_began_at = nil
@@ -47,8 +50,8 @@ class ScreeningsImporter
 
       transition = [previous_screening&.ticket_status, screening.ticket_status]
 
-      screening.sale_began_at ||= Time.now.utc if transition == ['future', 'current'] || transition == [nil, 'current']
-      screening.soldout_at    ||= Time.now.utc if transition == ['current', 'soldout']
+      screening.sale_began_at = screening.sale_began_at || Time.now.utc if transition == ['future', 'current'] || transition == [nil, 'current']
+      screening.soldout_at = screening.soldout_at || Time.now.utc if transition == ['current', 'soldout']
       screening = set_sales_tallies(screening, previous_screening)
     end
   end
