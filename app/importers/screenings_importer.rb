@@ -33,6 +33,7 @@ class ScreeningsImporter
         end
         puts "Inserting #{results.count} screenings"
       end
+      retain_deleted
     end
 
     puts 'Complete!'
@@ -50,7 +51,7 @@ class ScreeningsImporter
 
   def provide_screening(screening_hash, film)
     Screening.new(screening_hash.merge(film_id: film.id)).tap do |screening|
-      previous_screening = @the_previous[screening.identifier]
+      previous_screening = @the_previous.delete(screening.identifier)
       screening.minutes_on_sale = previous_screening&.minutes_on_sale
       screening.sale_rounds     = previous_screening&.sale_rounds
 
@@ -65,13 +66,11 @@ class ScreeningsImporter
         screening.soldout_at    = previous_screening&.soldout_at
       end
 
-      screening.sale_began_at ||=  Time.now.utc if transition.moves_to?('current')
-      screening.soldout_at    ||=  Time.now.utc if transition.moves_from?('current')
+      screening.sale_began_at = screening.sale_began_at || Time.now.utc if transition.moves_to?('current')
+      screening.soldout_at    = screening.soldout_at || Time.now.utc if transition.moves_from?('current')
       screening = set_sales_tallies(screening, previous_screening)
     end
   end
-
-
 
   def set_sales_tallies(screening, previous_screening)
     return true unless screening.soldout_at.present? && previous_screening&.soldout_at.nil? && screening.sale_began_at
@@ -79,5 +78,15 @@ class ScreeningsImporter
     screening.minutes_on_sale = (previous_screening.minutes_on_sale || 0) + ((screening.soldout_at - screening.sale_began_at) / 60)
     screening.sale_rounds     = (previous_screening.sale_rounds || 0) + 1
     screening
+  end
+
+  def retain_deleted
+    return unless @the_previous.values.present?
+    @the_previous.values.each do |screening|
+      screening.ticket_status = 'deleted'
+      screening.id = nil
+      screening.save!
+    end
+    p "Marked #{@the_previous.values.count} screenings deleted"
   end
 end

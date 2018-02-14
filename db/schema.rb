@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180213195805) do
+ActiveRecord::Schema.define(version: 20180214200141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(version: 20180213195805) do
     t.integer  "average_sellout_minutes"
   end
 
+  add_index "films", ["average_sellout_minutes"], name: "index_films_on_average_sellout_minutes", using: :btree
+  add_index "films", ["languages"], name: "index_films_on_languages", using: :btree
   add_index "films", ["title"], name: "index_films_on_title", using: :btree
 
   create_table "requests", force: :cascade do |t|

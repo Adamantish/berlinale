@@ -7,17 +7,24 @@
         - time_words = minutes > 0 ? "#{minutes} minutes ago" : "just now"
         = "Last updated #{time_words}."
     %h3
-      = "The #{@screenings.count} screenings you can buy right now"
+      = "#{@screenings.count} #{@do_hot_sellers ? 'fast selling ' : ''}screenings you can buy right now"
     %p
-      = "The official berlinale site is great if you already know a lot and are really committed to a week of full-time festival. \n But if you just like film and would like to see what's available to buy it's really difficult. Most screenings listed are either sold out, not yet on sale or never going to be. This bothered "
-      = link_to('me', 'https://www.linkedin.com/in/adam-misrahi-a4a21645/')
-      = ' so I made this site to list just the tickets you can buy right now.'
+      = "Hi I'm "
+      = link_to('Adam', 'https://twitter.com/MissRahee')
+      = ". Pleased to meet you. You seem lovely."
+    %p
+      The official berlinale site is great if you already know a lot and are really committed. But if, like me, you just enjoy film and would like to see what's available now then it's really difficult to find what is actually buyable. This bothered me so I made this site.
     %p
       = "There are still #{@future_screening_count} screenings of #{@future_film_count} films which haven't gone on sale yet. You can track them down with "
       = link_to 'the official site search', 'http://www.berlinale.de/en/programm/berlinale_programm/programmsuche.php'
 
     %p
       But if you want to get your plans sorted now use this. :)
+
+      %a.squaredThree.tooltip-toggle{'aria-label' => 'There\'s a buzz around these films. They tend to stay on sale for under 2 hours.', :href => @hot_sellers_url}
+        Just the fast selling ones
+        = check_box_tag 'squaredThree', 'yes', @do_hot_sellers, class: 'squaredThree', onclick: "window.open(\"#{@hot_sellers_url}\", \"_self\")"
+        %label{for: 'squaredThree'}
 
     .tabs
       - @date_groups.each_pair do |date_heading, screenings|

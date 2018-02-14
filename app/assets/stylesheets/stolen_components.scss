@@ -1,0 +1,114 @@
+@import "compass/css3";
+
+$activeColor: #27ae60; //green
+$darkenColor: darken($activeColor, 20%);
+$berlinale-red: #d82b47;
+
+$background: #3498db;
+
+.squaredThree {
+  width: 12em;
+  max-height: 18px;
+  position: relative;
+  display: block;
+  margin-top: 2em;
+  padding: 0.6em;
+  padding-left: 3em;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  background-color: $berlinale-red;
+
+  label {
+    white-space: nowrap;
+    margin-left: 10px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 7px;
+    left: 0;
+    background: linear-gradient(top, #222 0%, #45484d 100%);
+    border-radius: 4px;
+    box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,.4);
+    &:after {
+      content: '';
+      width: 9px;
+      height: 5px;
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      border: 3px solid #fcfff4;
+      border-top: none;
+      border-right: none;
+      background: transparent;
+      opacity: 0;
+      transform: rotate(-45deg);
+    }
+    &:hover::after {
+      opacity: 0.3;
+    }
+  }
+  input[type=checkbox] {
+    visibility: hidden;
+    &:checked + label:after {
+      opacity: 1;
+    }    
+  }
+}
+
+.tooltip-toggle {
+  cursor: pointer;
+  position: relative;
+
+  //Tooltip text container - above element
+  //You can adjust the position to make the container appear below or beside the element
+  &::before {
+    background-color: #000;
+    border-radius: 5px;
+    color: #fff;
+    content: attr(aria-label); //This pulls in the text from the element with the tooltip
+    left: 0;
+    padding: 1rem;
+    position: absolute;
+    text-transform: none;
+    top: -108px; //This places the container above the element that needs a tooltip
+    transition: all 0.5s ease;
+    width: 160px;
+  }
+
+  //Tooltip arrow
+  //You can adjust the position of this to align nicely with the element that
+  //needs a tooltip. You can also use `transform` to rotate it to make the
+  //tooltip work below or next to the element.
+  &::after {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #000;
+    content: " ";
+    font-size: 0;
+    left: 9px; //This centers the arrow above the element with the tooltip
+    line-height: 0;
+    margin-left: -5px;
+    position: absolute;
+    top: -12px; //This positions the arrow at the bottom of the container
+    width: 0;
+  }
+
+  //Setting up the transition
+  &::before,
+  &::after {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  //Triggering the transition
+  &:focus::before,
+  &:focus::after,
+  &:hover::before,
+  &:hover::after {
+    opacity: 1;
+    transition: all 0.75s ease;
+  }
+}
+

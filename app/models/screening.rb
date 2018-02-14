@@ -21,16 +21,17 @@ class Screening < ActiveRecord::Base
   end
 
   def calc_minutes_on_sale
-    return minutes_on_sale unless can_calc_current_sale_metrics?
-    minutes_on_sale + currently_on_sale_minutes
+    return (minutes_on_sale || 0) unless can_calc_current_sale_metrics?
+    (minutes_on_sale || 0) + currently_on_sale_minutes
   end
 
   def calc_sale_rounds
-    return sale_rounds unless can_calc_current_sale_metrics?
-    sale_rounds + 1
+    return (sale_rounds || 0) unless can_calc_current_sale_metrics?
+    (sale_rounds || 0) + 1
   end
 
   def calc_average_sale_duration
+    return 0 unless calc_minutes_on_sale && calc_sale_rounds
     calc_minutes_on_sale.to_f / calc_sale_rounds
   end
 
@@ -79,7 +80,7 @@ class Screening < ActiveRecord::Base
 
   def currently_on_sale_minutes
     return 0 unless ticket_status == 'current'
-    return nil unless sale_began_at
+    return 0 unless sale_began_at
     ((Time.now.utc - sale_began_at) / 60).to_i
   end
 end
