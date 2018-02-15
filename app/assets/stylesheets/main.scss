@@ -1,4 +1,6 @@
 $well-width: 1000px;
+$tab-border-color: #a7c5c5;
+$tab-border-inactive-color: #c0cbf5;
 
 html {
   header {
@@ -99,7 +101,31 @@ html {
     padding-top: 0.3em;
   }
 
-  .tabs {
+  .listing {
     background-color: whitesmoke;
+    border-top: solid 1px $tab-border-color;
+  }
+
+  .tab {
+    border-top: solid 1px $tab-border-inactive-color;
+    border-left: solid 1px $tab-border-inactive-color;
+    border-right: solid 1px $tab-border-inactive-color;
+    text-decoration: none;
+    background-color: #e7e9f1;
+    display: inline-block;
+    text-align: center;
+    padding: 1em;
+    margin-top: 1em;
+    color: black;
+    position: relative;
+    box-sizing: border-box;
+    margin-right: -7px
+  }
+
+  .tab.selected {
+    border-top: solid 1px $tab-border-color;
+    border-left: solid 1px $tab-border-color;
+    border-right: solid 1px $tab-border-color;
+    background-color: white;
   }
 }

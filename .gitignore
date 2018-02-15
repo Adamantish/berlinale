@@ -20,3 +20,6 @@
 /public/countries.html
 .DS_Store
 .byebug_history
+
+_dump.sql
+.dump

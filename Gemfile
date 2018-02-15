@@ -1,7 +1,7 @@
-ruby '2.3.1'
+ruby '2.2.4'
 source 'https://rubygems.org'
 
-gem 'pg'
+gem 'pg', '~>0.18'
 gem 'rails_12factor'
 gem 'rails', '~>4.2.4'
 gem 'sass-rails', '~> 5.0'
@@ -10,6 +10,7 @@ gem 'jquery-rails'
 gem 'haml-rails'
 gem 'faraday'
 gem 'compass-rails'
+gem 'nokogiri'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

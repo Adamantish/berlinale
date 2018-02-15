@@ -10,6 +10,8 @@ class Screening < ActiveRecord::Base
   scope :soldout, -> { where(ticket_status: 'soldout') }
   scope :sales_recorded, -> { where.not(sale_rounds: nil) }
   
+  before_save :repair_missing_tallies
+
   def film_node
     # memoize here to prevent unnecessary de-serializations when working with the model
     @film_node ||= Nokogiri::HTML(html_row)
@@ -21,21 +23,21 @@ class Screening < ActiveRecord::Base
   end
 
   def calc_minutes_on_sale
-    return (minutes_on_sale || 0) unless can_calc_current_sale_metrics?
-    (minutes_on_sale || 0) + currently_on_sale_minutes
+    return (minutes_on_sale || 0) unless should_calc_current_sale_metrics?
+    (minutes_on_sale || 0) + calc_on_sale_minutes
   end
 
   def calc_sale_rounds
-    return (sale_rounds || 0) unless can_calc_current_sale_metrics?
+    return (sale_rounds || 0) unless should_calc_current_sale_metrics?
     (sale_rounds || 0) + 1
   end
 
   def calc_average_sale_duration
-    return 0 unless calc_minutes_on_sale && calc_sale_rounds
+    return 0 unless calc_minutes_on_sale > 0 && calc_sale_rounds > 0
     calc_minutes_on_sale.to_f / calc_sale_rounds
   end
 
-  def can_calc_current_sale_metrics?
+  def should_calc_current_sale_metrics?
     sale_began_at && !soldout_at
   end
 
@@ -78,9 +80,15 @@ class Screening < ActiveRecord::Base
   # ----------------------------
   private
 
-  def currently_on_sale_minutes
-    return 0 unless ticket_status == 'current'
+  def repair_missing_tallies
+    self.sale_rounds = 1 if minutes_on_sale.present?
+    return true unless sale_began_at && soldout_at && !minutes_on_sale.present?
+    self.minutes_on_sale = calc_on_sale_minutes
+  end
+
+  def calc_on_sale_minutes
     return 0 unless sale_began_at
-    ((Time.now.utc - sale_began_at) / 60).to_i
+    uptil = soldout_at || Time.now.utc
+    ((uptil - sale_began_at) / 60).to_i
   end
 end

@@ -1,13 +1,18 @@
 class HomeController < ApplicationController
 
   include ApplicationHelper
+
+  before_action :set_current_params
+
   def index
-    @do_hot_sellers = params[:hot_sellers] == 'true'
     @screenings = filtered_scope
-    @future_screening_count = Screening.future.count
-    @future_film_count = Screening.future.select(:film_id).uniq.count
+    # @future_screening_count = Screening.future.count
+    # @future_film_count = Screening.future.select(:film_id).uniq.count
     @date_groups = @screenings.to_a.group_by(&:date_heading)
-    @hot_sellers_url = hot_sellers_url
+    
+    set_hot_sellers_url
+    set_now_url
+    set_future_url
 
     begin
       count = @screenings.uniq.count(:page_url)
@@ -31,17 +36,38 @@ class HomeController < ApplicationController
   end
   
   def status_scope(scope)
-    status = params['status'] || 'current'
-    scope.where(ticket_status: status)
+    scope.where(ticket_status: @ticket_status_filter)
   end
 
-  def hot_sellers_url
+  def url_for(params_copy)
+    "#{request.path}?#{params_copy.to_query}"
+  end
+
+  def set_hot_sellers_url
+    params_copy = @current_params.dup
     if @do_hot_sellers
-      params.delete(:hot_sellers)
+      params_copy.delete(:hot_sellers)
     else
-      params[:hot_sellers] = 'true'
+      params_copy[:hot_sellers] = 'true'
     end
-    # params = params.except(:action, :controller)
-    "#{request.path}?#{params.to_query}"
+    @hot_sellers_url = url_for(params_copy)
+  end
+
+  def set_now_url
+    params_copy = @current_params.dup
+    params_copy.delete(:status)
+    @now_url = url_for(params_copy)
+  end
+
+  def set_future_url
+    params_copy = @current_params.dup
+    params_copy[:status] = 'future'
+    @future_url = url_for(params_copy)
+  end
+
+  def set_current_params
+    @current_params = params.except('action', 'controller')
+    @do_hot_sellers = params[:hot_sellers] == 'true'
+    @ticket_status_filter = params['status'] || 'current'
   end
 end

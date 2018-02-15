@@ -1,5 +1,4 @@
 require 'nokogiri'
-
 module Parsers
   class BerlinalePage
     CSS_LOCATORS = {
@@ -23,7 +22,13 @@ module Parsers
     def results
       return nil if all_film_rows.empty?
       ticket_icons.map do |icon|
-        results_hash(icon)
+        begin
+          results_hash(icon)
+        rescue StandardError => e
+          p "Damn couldn't get this screening: #{icon}"
+          p e.message
+          p e.backtrace
+        end
       end
     end
 

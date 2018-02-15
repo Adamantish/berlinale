@@ -26,7 +26,7 @@ class ScreeningsImporter
         page += 1
         body = Scrapers::BerlinaleProgramme.new(page).data
         results = Parsers::BerlinalePage.new(body).results
-        break unless results
+        break unless results.present?
         results.each do |result| 
           film = Film.find_or_create_by(result[:film])
           provide_screening(result[:screening], film).save!
@@ -52,18 +52,18 @@ class ScreeningsImporter
   def provide_screening(screening_hash, film)
     Screening.new(screening_hash.merge(film_id: film.id)).tap do |screening|
       previous_screening = @the_previous.delete(screening.identifier)
-      screening.minutes_on_sale = previous_screening&.minutes_on_sale
-      screening.sale_rounds     = previous_screening&.sale_rounds
+      screening.sale_began_at = nil
+      screening.soldout_at = nil
 
-      transition = StateTransition.new(from: previous_screening&.ticket_status, to: screening.ticket_status)
+      transition = StateTransition.new(from: previous_screening ? previous_screening.ticket_status : nil, to: screening.ticket_status)
+      if previous_screening
+        screening.minutes_on_sale = previous_screening.minutes_on_sale
+        screening.sale_rounds     = previous_screening.sale_rounds
 
-      if transition.moves_to?('current')
-        #reset for a new round of sale
-        screening.sale_began_at = nil
-        screening.soldout_at = nil
-      else
-        screening.sale_began_at = previous_screening&.sale_began_at
-        screening.soldout_at    = previous_screening&.soldout_at
+        unless transition.moves_to?('current')
+          screening.sale_began_at = previous_screening.sale_began_at
+          screening.soldout_at    = previous_screening.soldout_at
+        end
       end
 
       screening.sale_began_at = screening.sale_began_at || Time.now.utc if transition.moves_to?('current')
@@ -73,7 +73,7 @@ class ScreeningsImporter
   end
 
   def set_sales_tallies(screening, previous_screening)
-    return true unless screening.soldout_at.present? && previous_screening&.soldout_at.nil? && screening.sale_began_at
+    return true unless screening.soldout_at.present? && screening.sale_began_at && previous_screening && previous_screening.soldout_at.nil?
     # Note this logic is mostly repeated in the Screening class in the calc methods. Not super easy to refactor
     screening.minutes_on_sale = (previous_screening.minutes_on_sale || 0) + ((screening.soldout_at - screening.sale_began_at) / 60)
     screening.sale_rounds     = (previous_screening.sale_rounds || 0) + 1
@@ -86,6 +86,7 @@ class ScreeningsImporter
       screening.ticket_status = 'deleted'
       screening.id = nil
       screening.save!
+      p "Retained deleted screening #{screening.identifier}"
     end
     p "Marked #{@the_previous.values.count} screenings deleted"
   end

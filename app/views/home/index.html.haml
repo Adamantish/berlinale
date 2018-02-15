@@ -7,26 +7,28 @@
         - time_words = minutes > 0 ? "#{minutes} minutes ago" : "just now"
         = "Last updated #{time_words}."
     %h3
-      = "#{@screenings.count} #{@do_hot_sellers ? 'fast selling ' : ''}screenings you can buy right now"
+      = "#{@screenings.count} #{@do_hot_sellers ? 'fast selling ' : ''}screenings you can buy #{@ticket_status_filter == 'current' ? 'right now' : 'soon'}"
     %p
-      = "Hi I'm "
-      = link_to('Adam', 'https://twitter.com/MissRahee')
-      = ". Pleased to meet you. You seem lovely."
+      Hi, I'm Adam. Pleased to meet you. You seem nice.
     %p
-      The official berlinale site is great if you already know a lot and are really committed. But if, like me, you just enjoy film and would like to see what's available now then it's really difficult to find what is actually buyable. This bothered me so I made this site.
+      The official berlinale site is great if you already know a lot and are really committed. But if, like me, you just enjoy film and would like to see what's available online it's hard to know where to start. This bothered me so I made this site.
     %p
-      = "There are still #{@future_screening_count} screenings of #{@future_film_count} films which haven't gone on sale yet. You can track them down with "
+      = "For more features like filter by country I recommend "
       = link_to 'the official site search', 'http://www.berlinale.de/en/programm/berlinale_programm/programmsuche.php'
 
     %p
-      But if you want to get your plans sorted now use this. :)
+      But if you want to get your plans sorted more easily use this. :)
 
       %a.squaredThree.tooltip-toggle{'aria-label' => 'There\'s a buzz around these films. They tend to stay on sale for under 2 hours.', :href => @hot_sellers_url}
         Just the fast selling ones
         = check_box_tag 'squaredThree', 'yes', @do_hot_sellers, class: 'squaredThree', onclick: "window.open(\"#{@hot_sellers_url}\", \"_self\")"
         %label{for: 'squaredThree'}
 
-    .tabs
+    %a.tab.current{ href: @now_url, class: @ticket_status_filter == 'current' ? 'selected' : '' }
+      Available
+    %a.tab.future{ href: @future_url, class: @ticket_status_filter == 'future' ? 'selected' : '' }
+      On sale soon
+    .listing
       - @date_groups.each_pair do |date_heading, screenings|
         %h3.date-heading
           = date_heading
@@ -43,6 +45,6 @@
                 .synopsis
                   = screening.film.synopsis
 
-%footer
-  .about
-    = link_to 'Me on twitter', 'https://twitter.com/MissRahee'
+    %footer
+      .about
+        = link_to 'Me on twitter', 'https://twitter.com/MissRahee'

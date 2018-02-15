@@ -1,14 +1,14 @@
 ## Berlinale Now
 
-### Which Berlinale film tickets are available online right now?
+### Which Berlinale film tickets are available online right now? Which ones should I buy tomorrow?
 
-#### A website which is now frozen in time on Valentine's Day 2017 [here](http://nowberlinale.herokuapp.com)
+#### It lives [here](http://nowberlinale.herokuapp.com)
 
 The official berlinale.de website is a bit annoying. If you don't know exactly what you're after you have to click through 28 pages scrutinising tiny little icons to see if they're grey (good) or white (not good).
 
 This site just automates that process. :)
 
-This project has a shelflife of probably just a week but in the evening since it was launched it's looking pretty popular. PRs very welcome! Top issues are:
+This project has a shelflife of probably just a week or two but in the evening since it was launched it's looking pretty popular. PRs very welcome! Top issues are:
 
 - Contains none of the supporting the information / photo to help decide if you want to click.
 
@@ -16,10 +16,10 @@ Take a look at the issues page and speak up if you're going to start work on som
 
 #### Tests
 
+Have fallen behind with maintaining the tests but there are a bunch for part of the backend import process
 ```
 rspec
 ```
-Only covers the backend import process right now. Could do with at least a controller test.
 
 #### Deployment
 
