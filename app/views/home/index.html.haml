@@ -9,9 +9,7 @@
     %h3
       = "#{@screenings.count} #{@do_hot_sellers ? 'fast selling ' : ''}screenings you can buy #{@ticket_status_filter == 'current' ? 'right now' : 'soon'}"
     %p
-      Hi, I'm Adam. Pleased to meet you. You seem nice.
-    %p
-      The official berlinale site is great if you already know a lot and are really committed. But if, like me, you just enjoy film and would like to see what's available online it's hard to know where to start. This bothered me so I made this site.
+      Hiya. Something to help figure out what to see at Berlinale. The official berlinale site is great if you already know a lot and are really committed. But if, like me, you just enjoy film and would like to see what's available online it's hard to know where to start. This bothered me so I made this site.
     %p
       = "For more features like filter by country I recommend "
       = link_to 'the official site search', 'http://www.berlinale.de/en/programm/berlinale_programm/programmsuche.php'
@@ -19,7 +17,7 @@
     %p
       But if you want to get your plans sorted more easily use this. :)
 
-      %a.squaredThree.tooltip-toggle{'aria-label' => 'There\'s a buzz around these films. They tend to stay on sale for under 2 hours.', :href => @hot_sellers_url}
+      %a.squaredThree.tooltip-toggle{'aria-label' => 'There\'s a buzz around these films. They tend to stay on sale for under 4 hours.', :href => @hot_sellers_url}
         Just the fast selling ones
         = check_box_tag 'squaredThree', 'yes', @do_hot_sellers, class: 'squaredThree', onclick: "window.open(\"#{@hot_sellers_url}\", \"_self\")"
         %label{for: 'squaredThree'}
@@ -49,3 +47,4 @@
     %footer
       .about
         = link_to 'Me on twitter', 'https://twitter.com/MissRahee'
+        = link_to 'Open-source code for Now Berlinale', 'https://github.com/Adamantish/berlinale'

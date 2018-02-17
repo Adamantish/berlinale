@@ -6,11 +6,9 @@
 
 The official berlinale.de website is a bit annoying. If you don't know exactly what you're after you have to click through 28 pages scrutinising tiny little icons to see if they're grey (good) or white (not good).
 
-This site just automates that process. :)
+This Ruby on Rails site just automates that process. :)
 
 This project has a shelflife of probably just a week or two but in the evening since it was launched it's looking pretty popular. PRs very welcome! Top issues are:
-
-- Contains none of the supporting the information / photo to help decide if you want to click.
 
 Take a look at the issues page and speak up if you're going to start work on something.
 
