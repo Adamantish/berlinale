@@ -82,9 +82,11 @@ html {
   }
 
   .big-link {
-    display: inline-block;
-    width: 200px;
-    vertical-align: top;
+    color: transparent;
+  }
+
+  .starts-at {
+    font-size: 0.8em
   }
 
   .info {

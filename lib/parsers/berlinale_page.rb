@@ -21,7 +21,8 @@ module Parsers
 
     def results
       return nil if all_film_rows.empty?
-      ticket_icons.map do |icon|
+      icons = ticket_icons
+      icons.map do |icon|
         begin
           results_hash(icon)
         rescue StandardError => e
