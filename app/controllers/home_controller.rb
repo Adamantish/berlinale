@@ -31,7 +31,8 @@ class HomeController < ApplicationController
   end
 
   def hot_sellers_scope(scope)
-    fast_selling_film_ids = Film.where('average_sellout_minutes < 240').ids
+    @sellout_hours = 12
+    fast_selling_film_ids = Film.where('average_sellout_minutes < ?', @sellout_hours * 60).ids
     scope.where(film_id: fast_selling_film_ids)
   end
   

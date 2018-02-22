@@ -17,7 +17,7 @@
     %p
       But if you want to get your plans sorted more easily use this. :)
 
-      %a.squaredThree.tooltip-toggle{'aria-label' => 'There\'s a buzz around these films. They tend to stay on sale for under 4 hours.', :href => @hot_sellers_url}
+      %a.squaredThree.tooltip-toggle{'aria-label' => "There\'s a buzz around these films. They tend to stay on sale for under #{@sellout_hours} hours.", :href => @hot_sellers_url}
         Just the fast selling ones
         = check_box_tag 'squaredThree', 'yes', @do_hot_sellers, class: 'squaredThree', onclick: "window.open(\"#{@hot_sellers_url}\", \"_self\")"
         %label{for: 'squaredThree'}
@@ -47,4 +47,4 @@
     %footer
       .about
         = link_to 'Me on twitter', 'https://twitter.com/MissRahee'
-        = link_to 'Open-source code for Now Berlinale', 'https://github.com/Adamantish/berlinale'
+        = link_to 'Open-source code for this site', 'https://github.com/Adamantish/berlinale'
